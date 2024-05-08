@@ -11,6 +11,9 @@ from .forms import *
 def index(request):
     return render(request, 'core/base.html')
 
+def home(request):
+    return render(request, 'core/dash.html')
+
 
 def babies(request):
     baby = Baby.objects.all()
@@ -140,12 +143,12 @@ def assignsitter(request, sitter_id):
 # INVENTORY
 
 def inventorysupply(request):
-    inventory = InventorySupply.objects.all()
+    inventory = InventoryCategory.objects.all()
     context = {'inventory':inventory}
     return render(request, 'core/inventory/viewinventory.html', context)
 
 
 def inventoryreciept(request):
-    inventory = InventorySupply.objects.all()
+    inventory = InventoryCategory.objects.all()
     context = {'inventory':inventory}
     return render(request, 'core/inventory/inventoryreciept.html', context)

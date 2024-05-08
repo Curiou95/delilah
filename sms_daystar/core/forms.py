@@ -1,5 +1,5 @@
 from django import forms
-from .models import StayPeriod, Baby, Sitter, PaymentCurrency, Fees, Attendance, InventorySupply, InventorySupplyReceipt, ResaleItem
+from .models import StayPeriod, Baby, Sitter, PaymentCurrency, Fees, Attendance, InventoryCategory, InventorySupplyReceipt, ResaleItem
 
 class StayPeriodForm(forms.ModelForm):
     class Meta:
@@ -101,7 +101,7 @@ class AttendanceForm(forms.ModelForm):
 
 class InventorySupplyForm(forms.ModelForm):
     class Meta:
-        model = InventorySupply
+        model = InventoryCategory
         fields = '__all__'
 
 class InventorySupplyReceiptForm(forms.ModelForm):
