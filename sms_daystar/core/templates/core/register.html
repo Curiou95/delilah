@@ -1,0 +1,23 @@
+<h1>Sign Up </h1>
+
+{% for message in messages %}
+    <h5 class="text-danger">{{ message }}</h5>
+{% endfor %}
+
+<form action="/register/" method="post">
+    {% csrf_token %}
+    <p>Username: </p>
+    <input type="text" name="username" id="username">
+
+    <p>Email: </p>
+    <input type="email" name="email" id="email">
+
+    <p>Password: </p>
+    <input type="password" name="password" id="password">
+    <p>Repeat password: </p>
+    <input type="password" name="password2" id="password2"> <br>
+
+    <input type="submit" value="Sign Up">
+</form>
+
+

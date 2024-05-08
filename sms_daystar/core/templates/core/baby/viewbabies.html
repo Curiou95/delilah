@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+
+{% block page-title %}
+    <div class="d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>BABY</h1>
+    </div>
+
+{% endblock page-title %}
+
+
+{% block addlink %}
+    {% url 'addbaby' %}
+{% endblock %}
+
+{% block title %}
+    DayStar | BabyPage
+{% endblock %}
+
+{% block content %}
+    <div class="">
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col"> #</th>
+                <th scope="col">Baby #</th>
+                <th scope="col">Name</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Location</th>
+                <th scope="col">Parent</th>
+                <th scope="col">Stay Period</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for babies in baby %}
+                <tr>
+                    <th scope="row">
+                    <strong>{{ forloop.counter }}</strong>
+                    </th>
+                    <td>{{ babies.b_no }}</td>
+                    <td>{{ babies.b_name }}</td>
+                    <td>{{ babies.b_dob }}</td>
+                    <td>{{ babies.b_gender }}</td>
+                    <td>{{ babies.b_location }}</td>
+                    <td>{{ babies.b_parent }}</td>
+                    <td>{{ babies.b_stayperiod }}</td>
+                    <td>
+                    <a href="{% url 'readbaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
+                    <a href="{% url 'updatebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
+                    <a href="{% url 'deletebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
+                    
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+    </div>
+    
+{% endblock %}

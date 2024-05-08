@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+
+{% block page-title %}
+    <div class=" d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>   
+            ADD SITTERS
+        </h1>
+    </div>
+    
+
+{% endblock page-title %}
+
+
+
+{% block addlink %} {% url 'addsitter' %} {% endblock addlink %}
+
+
+
+{% block title %}
+    DayStar | AddSitterPage
+{% endblock title %}
+
+{% block content %}
+
+    <div class="container w-75">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" class="btn btn-outline-primary m-3" value="Submit" />
+        </form>
+        {% comment %} <input type="submit" class="btn btn-outline-primary m-3" value="Submit" /> {% endcomment %}
+    </div>
+
+{% endblock content %}

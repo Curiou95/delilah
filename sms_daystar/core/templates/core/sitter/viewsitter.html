@@ -1,0 +1,88 @@
+{% extends 'core/base.html' %}
+
+{% block page-title %}
+    <div class="d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>SITTERS</h1>
+    </div>
+
+{% endblock page-title %}
+
+
+{% block addlink %}
+    {% url 'addsitter' %}
+{% endblock %}
+
+{% block title %}
+    DayStar | SitterPage
+{% endblock %}
+
+{% block content %}
+    <div class="">
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Sitter #</th>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Location</th>
+                <th scope="col">Recommender</th>
+                <th scope="col">Education level</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sitters in sitter %}
+                <tr>
+                    <th scope="row">
+                    <strong>{{ sitters.s_no }}</strong>
+                    </th>
+                    <td>{{ sitters.s_name }}</td>
+                    <td>{{ sitters.s_gender }}</td>
+                    <td>{{ sitters.s_location }}</td>
+                    <td>{{ sitters.s_recomender }}</td>
+                    <td>{{ sitters.s_educ_level }}</td>
+                    <td>
+                    <a href="{% url 'readsitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
+                    <a href="{% url 'updatesitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
+                    <a href="{% url 'deletesitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
+                    <a href="{% url 'assignsitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-car"></i></button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+    </div>
+    <div class="">
+        <table class="table table-striped-columns">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">SITTER</th>
+                    <th scope="col">BABIES</th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">PAY OUT</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in attendance_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{attendance.a_sitter.s_name}}</td>
+                        <td>
+                            {% for baby in attendance.a_baby.all %}
+                                <li>{{ baby.b_name }}</li>
+                                {% with counter=forloop.counter %}{% endwith %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ attendance.a_payment_date }}</td>
+                        {% comment %} <td>{{ attendance.a_baby.all|length }}</td> {% endcomment %}
+                        <td>{{ attendance.total_payment }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

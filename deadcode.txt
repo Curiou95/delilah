@@ -1,0 +1,33 @@
+# def assignsitter(request):
+    if request.method == 'POST':
+        # Assuming the form submits a list of baby IDs and the selected sitter ID
+        sitter_id = request.POST.get('sitter_id')
+        baby_ids = request.POST.getlist('baby_ids')
+
+        # Retrieve the sitter based on the provided ID
+        try:
+            sitter = Sitter.objects.get(pk=sitter_id)
+        except Sitter.DoesNotExist:
+            # Handle the case where the sitter with the provided ID doesn't exist
+            return render(request, 'core/error.html', {'message': 'Sitter not found'})
+
+        # Check if any of the selected babies are already assigned to another sitter
+        conflicting_babies = Baby.objects.filter(attendance__a_sitter_id__isnull=False, pk__in=baby_ids)
+        if conflicting_babies.exists():
+            return render(request, 'core/error.html', {'message': 'Some babies are already assigned to another sitter'})
+
+        # Perform the assignment within a transaction to ensure consistency
+        with transaction.atomic():
+            # Create a new attendance record for each selected baby
+            for baby_id in baby_ids:
+                baby = Baby.objects.get(pk=baby_id)
+                attendance = Attendance.objects.create(a_sitter=sitter, a_payment_date= date.today())
+                attendance.a_baby.add(baby)
+
+        # Redirect to a success page or another appropriate view
+        return redirect('viewsitter')
+
+    else:
+        # Handle GET requests to render the form for selecting babies and sitter
+        # You need to implement the template for this form
+        return render(request, 'core/sitter/assign.html')

@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+
+{% block page-title %}
+    <div class=" d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>   
+            {{sitter.s_name}}
+        </h1>
+    </div>
+    
+
+{% endblock page-title %}
+
+
+
+{% block addlink %} {% url 'addsitter' %} {% endblock addlink %}
+
+
+
+{% block title %}
+    DayStar | {{sitter.s_name }} page
+{% endblock title %}
+
+{% block content %}
+
+    <div class="">
+        <h1>Sitter Details</h1>
+        <p>Name: {{ sitter.s_name }}</p>
+        <!-- Other details of the sitter -->
+        <p>Total Payment: {{ payment }}</p>
+    </div>
+
+{% endblock content %}
