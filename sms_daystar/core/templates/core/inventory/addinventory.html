@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+
+{% block page-title %}
+    <div class=" d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>   
+            ADD INVENTORY
+        </h1>
+    </div>
+    
+
+{% endblock page-title %}
+
+
+
+
+
+
+
+{% block title %}
+    DayStar | AddinventoryPage
+{% endblock title %}
+
+{% block content %}
+
+    <div class="container w-100">
+        <h1>Adding to Inventory</h1>
+
+        {% if error_message %}
+            <p>{{ error_message }}</p>
+        {% endif %}
+    
+        <form method="post">
+            {% csrf_token %}
+            
+
+            {{ form }}
+            <br>
+        
+            <button type="submit">ADD</button>
+        </form>
+
+        
+    </div>
+
+
+{% endblock content %}

@@ -64,12 +64,12 @@
                             </a>
                         </li> 
                         <li class="nav-item">
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="{% url 'dollview' %}">
                                 <i class="bi bi-bank"></i> Dolls
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href=" ">
+                            <a class="nav-link" href="{% url 'financeview' %} ">
                                 <i class="bi bi-bank"></i> Finance
                             </a>
                         </li>
@@ -101,7 +101,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout/">
+                            <a class="nav-link" href="{% url 'logout' %}">
                                 <i class="bi bi-box-arrow-left"></i> Logout
                             </a>
                         </li>
@@ -118,7 +118,7 @@
             {% include "core/navbar.html" %}
             <header class="bg-surface-secondary border-top">
                 <div class="container-xl">
-                    <div class="py-5 border-bottom">
+                    <div class="py-3 border-bottom">
                         <!-- Page heading -->
                         <div>
                             <div class="row align-items-center">

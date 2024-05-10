@@ -1,5 +1,12 @@
 from django import forms
-from .models import StayPeriod, Baby, Sitter, PaymentCurrency, Fees, Attendance, InventoryCategory, InventorySupplyReceipt, ResaleItem
+from .models import *
+
+
+
+
+
+
+
 
 class StayPeriodForm(forms.ModelForm):
     class Meta:
@@ -10,6 +17,18 @@ class BabyForm(forms.ModelForm):
     class Meta:
         model = Baby
         fields = '__all__'
+    
+# class CheckInForm(forms.ModelForm):
+#     class Meta:
+#         model = CheckIn
+#         fields = ['baby', 'checked_in_by']
+class CheckInForm(forms.Form):
+    checked_in_by = forms.CharField(max_length=100, label='Who brought the baby?')
+
+class CheckOutForm(forms.ModelForm):
+    class Meta:
+        model = CheckOut
+        fields = ['checked_out_by']
 
 class SitterForm(forms.ModelForm):
     class Meta:

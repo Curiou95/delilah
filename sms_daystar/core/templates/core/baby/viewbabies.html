@@ -31,29 +31,104 @@
                 <th scope="col">Location</th>
                 <th scope="col">Parent</th>
                 <th scope="col">Stay Period</th>
+                <th scope="col">Checkin</th>
+                <th scope="col">Checkin by</th>
+                <th scope="col">Checkout</th>
+                <th scope="col">Checkout by</th>
                 <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for babies in baby %}
-                <tr>
-                    <th scope="row">
-                    <strong>{{ forloop.counter }}</strong>
-                    </th>
-                    <td>{{ babies.b_no }}</td>
-                    <td>{{ babies.b_name }}</td>
-                    <td>{{ babies.b_dob }}</td>
-                    <td>{{ babies.b_gender }}</td>
-                    <td>{{ babies.b_location }}</td>
-                    <td>{{ babies.b_parent }}</td>
-                    <td>{{ babies.b_stayperiod }}</td>
-                    <td>
-                    <a href="{% url 'readbaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
-                    <a href="{% url 'updatebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
-                    <a href="{% url 'deletebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
+                {% for babies in babies_data  %}
+                
                     
-                    </td>
-                </tr>
+                            <tr>
+                                <th scope="row">
+                                <strong>{{ forloop.counter }}</strong>
+                                </th>
+                                <td>{{ babies.b_no }}</td>
+                                <td>{{ babies.b_name }}</td>
+                                <td>{{ babies.b_dob }}</td>
+                                <td>{{ babies.b_gender }}</td>
+                                <td>{{ babies.b_location }}</td>
+                                <td>{{ babies.b_parent }}</td>
+                                <td>{{ babies.b_stayperiod }}</td>
+
+                                <td>
+                                    {% if babies.checkins.exists %}
+                                        {% for checkin in babies.checkins.all %}
+                                            {{ checkin.checkin_time }}<br>
+                                        {% endfor %}
+                                    {% else %}
+                                        Not Checked In
+                                    {% endif %}
+                                </td>
+                            
+                                <td>
+                                    {% if babies.checkins.exists %}
+                                        {% for checkin in babies.checkins.all %}
+                                            {{ checkin.checked_in_by }}<br>
+                                        {% endfor %}
+                                    {% endif %}
+                                    
+                                </td>
+
+                                <td>
+                                    {% if babies.checkins.exists %}
+                                        {% for checkin in babies.checkins.all %}
+                                            {% if checkin.checkouts.exists %}
+                                                {% for checkout in checkins.checkouts.all %}
+                                                    {{ checkout.checkout_time }}<br>
+                                                {% endfor %}
+                                            {% else %}
+                                                Not Checked Out
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if baby.checkins.exists %}
+                                        {% for checkin in baby.checkins.all %}
+                                            {% if checkin.checkouts.exists %}
+                                                {% for checkout in checkin.checkouts.all %}
+                                                    {{ checkout.checked_out_by }}<br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                
+                                <td>
+                                    <div class="">
+                                        <form action="{% url 'checkin' babies.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary">Check-in</button>
+                                        </form>
+                                    </div>
+                                    {{ babies.checkins.checkin_time|default:"Not Checked In" }}
+                                    {% for checkin in baby.checkins.all %}
+                                    {{ checkin.checkin_time }}<br>
+                                {% endfor %}
+                                </td>
+                                <td>{{babies.checkins.checked_in_by}}</td>
+                                <td>
+                                    <div class="">
+                                        <form action="{% url 'checkout' babies.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary">Check-out</button>
+                                        </form>
+                                    </div> 
+                                    {{ babies.checkouts.checkout_time|default:"Not Checked Out" }}
+                                </td>
+                                <td></td> 
+                                <td>
+                                <a href="{% url 'readbaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
+                                <a href="{% url 'updatebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
+                                <a href="{% url 'deletebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
+                                
+                                </td>
+                            </tr>
+                        
                 {% endfor %}
             </tbody>
         </table> 

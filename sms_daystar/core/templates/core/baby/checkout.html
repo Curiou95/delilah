@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+
+{% block page-title %}
+    <div class=" d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>   
+            checkout
+        </h1>
+    </div>
+    
+
+{% endblock page-title %}
+
+
+
+{% comment %} {% block addlink %} {% url '' %} {% endblock addlink %} {% endcomment %}
+
+
+
+{% block title %}
+    DayStar | checkout
+{% endblock title %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <h2>Check-out</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="checked_out_by">Checked out by:</label>
+                <input type="text" class="form-control" id="checked_out_by" name="checked_out_by">
+            </div>
+            <button type="submit" class="btn btn-primary">Check-out</button>
+        </form>
+    </div>
+
+{% endblock content %}

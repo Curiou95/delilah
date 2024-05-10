@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+
+{% block page-title %}
+    <div class="d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>INVENTORY</h1>
+    </div>
+
+{% endblock page-title %}
+
+{% block addlink %} {% url 'addinventory' %} {% endblock addlink %}
+
+{% block content %}
+
+
+
+    <div class="">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">QTY</th>
+                    <th scope="col">Unit Cost</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for items in inventory %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{items.category}}</td>
+                        <td>{{items.name}}</td>
+                        <td>{{items.quantity}}</td>
+                        <td>{{items.unit_cost }} ugx</td>
+                        <td>{{items.received_date}}</td>
+                        <td>
+                            #####
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock content %}
+

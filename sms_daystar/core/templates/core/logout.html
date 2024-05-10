@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+<br><br><br>
+
+{% block content %}
+    {% comment %} <div class="container ">
+        <h2 class="text-center">
+            YOU HAVE SUCCESSFULLY LOGGED OUT!!
+        </h2>
+        <a href="{% url 'login' %}">Login Here!!</a>
+    </div> {% endcomment %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Logout</div>
+                    <div class="card-body">
+                        <p>You have been logged out.</p>
+                        <a href="{% url 'login' %}" class="btn btn-primary">Login again</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}  

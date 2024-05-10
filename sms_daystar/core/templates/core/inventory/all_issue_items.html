@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Issued Items</title>
+</head>
+<body>
+    <h1>All Issued Items</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity Available</th>
+                <!-- Add other relevant headers -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for issue in issues %}
+            <tr>
+                <td>{{ issue.supply.name }}</td>
+                <td>{{ issue.quantity_available }}</td>
+                <!-- Add other relevant data -->
+            </tr> 
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Total Issued Quantity: {{ total_issued_quantity }}</p>
+    <p>Total Received Quantity: {{ total_received_quantity }}</p>
+    <p>Net Quantity: {{ net_quantity }}</p>
+</body>
+</html>
