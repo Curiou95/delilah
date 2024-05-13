@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+
+{% block page-title %}
+    <div class=" d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>   
+            ASSIGN SITTER
+        </h1>
+    </div>
+    
+
+{% endblock page-title %}
+
+
+
+{% block addlink %} {% url 'addsitter' %} {% endblock addlink %}
+
+
+
+{% block title %}
+    DayStar | AssignSitterPage
+{% endblock title %}
+
+{% block content %}
+
+<div class="">
+    <table class="table table-striped-columns">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">SITTER</th>
+                <th scope="col">BABIES</th>
+                <th scope="col">DATE</th>
+                <th scope="col">PAY OUT</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendance_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{attendance.a_sitter.s_name}}</td>
+                    <td>
+                        {% for baby in attendance.a_baby.all %}
+                            <li>{{ baby.b_name }}</li>
+                            {% with counter=forloop.counter %}{% endwith %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ attendance.a_payment_date }}</td>
+                    {% comment %} <td>{{ attendance.a_baby.all|length }}</td> {% endcomment %}
+                    <td>{{ attendance.total_payment }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    
+{% endblock content %}

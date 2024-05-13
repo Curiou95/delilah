@@ -1,33 +1,189 @@
-{% extends "core/base.html" %}
-
-{% block page-title %}
-    <div class=" d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>   
-            {{sitter.s_name}}
-        </h1>
-    </div>
-    
-
-{% endblock page-title %}
-
-
-
-{% block addlink %} {% url 'addsitter' %} {% endblock addlink %}
-
-
-
-{% block title %}
-    DayStar | {{sitter.s_name }} page
-{% endblock title %}
+{% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
 
-    <div class="">
-        <h1>Sitter Details</h1>
-        <p>Name: {{ sitter.s_name }}</p>
-        <!-- Other details of the sitter -->
-        <p>Total Payment: {{ payment }}</p>
-    </div>
 
-{% endblock content %}
+<main id="main" class="mt-3">
+    <!-- Section - Bootstrap Brain Component -->
+
+    <!-- Section - Bootstrap Brain Component -->
+    <section class="pb-3 pb-md-4 pb-xl-5 bg-light">
+        <div class="container">
+            <div class="row gy-4 gy-lg-0">
+                <div class="col-12 col-lg-4 col-xl-4">
+                    <div class="row gy-4">
+                        <div class="col-12">
+                            <div
+                                class="card widget-card border-light shadow-sm"
+                            >
+                            
+
+                                <div class="card-body">
+                                    <div class="text-center mb-3">
+                                        <img
+                                            src="{% static '/images/undraw_profile.svg' %}"
+                                            class="img-fluid rounded-circle w-25"
+                                            alt="sitter {{ sitter.s_number }}"
+                                        />
+                                    </div>
+                                    <h5 class="text-center mb-1">
+                                        {{ sitter.s_name }}  ,
+                                        <span>{{ sitter.s_gender }}</span>
+                                    </h5>
+
+                                    <div class="d-flex gap-4">
+                                        <a href="{% url 'updatesitter' sitter.id %}"
+                                            ><button
+                                                class="btn btn-outline-primary"
+                                                type="button"
+                                            >
+                                                <i
+                                                    class="fa fa-pen"
+                                                    aria-hidden="true"
+                                                ></i
+                                                >EDIT
+                                            </button>
+                                        </a>
+                                        <a href="{% url 'assignsitter' sitter.id %}"
+                                            ><button
+                                                class="btn btn-primary"
+                                                type="button"
+                                            >
+                                                <i
+                                                    class="fa fa-pen"
+                                                    aria-hidden="true"
+                                                ></i
+                                                >Assign
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div
+                                class="card widget-card border-light shadow-sm"
+                            >
+                                <div class="card-header text-bg-primary-outline">
+                                    About Me
+                                </div>
+                                <div class="card-body">
+                                    <ul
+                                        class="list-group list-group-flush mb-0"
+                                    >
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                <span
+                                                    class="bii bi-mortarboard-fill me-2"
+                                                ></span>
+                                                Education
+                                            </h6>
+                                            <span>M.S Computer Science</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                <span
+                                                    class="bii bi-geo-alt-fill me-2"
+                                                ></span>
+                                                Location
+                                            </h6>
+                                            <span
+                                                >Mountain View, California</span
+                                            >
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                <span
+                                                    class="bii bi-building-fill-gear me-2"
+                                                ></span>
+                                                Company
+                                            </h6>
+                                            <span>GitHub Inc</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-12 col-lg-8 col-xl-8">
+                    <div class="card widget-card border-light shadow-sm">
+                        <div class="card-body p-4">
+                            <ul
+                                class="nav nav-tabs"
+                                id="profileTab"
+                                role="tablist"
+                            >
+                                <li class="nav-item" role="presentation">
+                                        Overview
+                                </li>
+                            </ul>
+                            <div
+                                class="tab-content pt-4"
+                                id="profileTabContent"
+                            >
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="overview-tab-pane"
+                                    role="tabpanel"
+                                    aria-labelledby="overview-tab"
+                                    tabindex="0"
+                                >
+                                    <h5 class="mb-3">About</h5>
+                                    {% comment %} <p class="lead mb-3">
+                                        Ethan Leo is a seasoned and
+                                        results-driven Project Manager who
+                                        brings experience and expertise to
+                                        project management. With a proven track
+                                        record of successfully delivering
+                                        complex projects on time and within
+                                        budget, Ethan Leo is the go-to
+                                        professional for organizations seeking
+                                        efficient and effective project
+                                        leadership.
+                                    </p> {% endcomment %}
+                                    <h5 class="mb-3">Assigned Babies</h5>
+                                    <div class="row g-0">
+                                    
+                                        <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Handle</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for babe in baby %}
+                                              <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>{{ babe.b_name }}</td>
+                                                <td>
+                                                    {% for attendance in sitter.attendance_set.all %}
+                                                        {{ attendance.a_payment_date|date }}
+                                                    {% endfor %}
+                                                </td>
+                                                <td>{{ babe.b_stayperiod }}</td>
+                                              </tr>
+                                              {% endfor %}
+                                            </tbody>
+                                          </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

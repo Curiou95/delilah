@@ -55,6 +55,43 @@
                                 <td>{{ babies.b_stayperiod }}</td>
 
                                 <td>
+                                    <a href="{% url 'checkin' babies.id %}" class="btn btn-info">checkin</a>
+                                    {% if babies.checkins.exists %}
+                                        Checked In at {{ babies.checkins.last.checkin_time|time:"H:i" }}
+                                    {% else %}
+                                        Not Checked In
+                                    {% endif %}
+                                </td>
+                                <td>{{ babies.checkins.last.checked_in_by }}</td>
+                                
+                                <td>
+                                    {% if babies.checkins.exists %}
+                                        {% if babies.checkins.last.checkouts.exists %}
+                                            Checked Out at {{ babies.checkins.last.checkout.checkout_time|time:"H:i" }}
+                                        {% else %}
+                                        <a href="{% url 'checkout' babies.checkins.last.id %} " class="btn btn-danger">checkout</a>
+                                            {% comment %} <form action="{% url 'checkout' babies.checkins.last.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-primary">Check-out</button>
+                                            </form> {% endcomment %}
+                                        {% endif %}
+                                    {% else %}
+                                        Not Checked Out
+                                    {% endif %}
+                                </td>
+                                <td>{{ babies.checkins.last.checkouts.last.checked_out_by }}</td>
+                                
+                                <td>
+                                    <a href="{% url 'readbaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
+                                    <a href="{% url 'updatebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
+                                    <a href="{% url 'deletebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
+                                </td>
+                                
+
+
+
+{% comment %} 
+                                <td>
                                     {% if babies.checkins.exists %}
                                         {% for checkin in babies.checkins.all %}
                                             {{ checkin.checkin_time }}<br>
@@ -113,7 +150,7 @@
                                 <td>{{babies.checkins.checked_in_by}}</td>
                                 <td>
                                     <div class="">
-                                        <form action="{% url 'checkout' babies.id %}" method="post">
+                                        <form action="{% url 'checkout' babies.checkins.last.id %}" method="post">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-primary">Check-out</button>
                                         </form>
@@ -126,7 +163,7 @@
                                 <a href="{% url 'updatebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
                                 <a href="{% url 'deletebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
                                 
-                                </td>
+                                </td> {% endcomment %}
                             </tr>
                         
                 {% endfor %}

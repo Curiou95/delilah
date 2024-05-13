@@ -9,13 +9,39 @@
 {% endblock page-title %}
 
 
-{% block addlink %}
-    {% url 'addsitter' %}
-{% endblock %}
+
 
 {% block title %}
     DayStar | SitterPage
 {% endblock %}
+
+{% block buttons %}
+    <a href=" {% url 'addsitter' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-plus"></i>
+        </span>
+        <span>add sitter</span>
+    </a>
+    <a href=" {% url 'add_schedule' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-plus"></i>
+        </span>
+        <span>add schedule</span>
+    </a>
+    <a href=" {% url 'schedule_list' %} " class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-plus"></i>
+        </span>
+        <span>view schedule</span>
+    </a>
+    <a href=" {% url 'sitter_txt' %} " class="btn d-inline-flex btn-sm btn-success mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-book"></i>
+        </span>
+        <span>Txt File</span>
+    </a>
+    
+{% endblock buttons %}
 
 {% block content %}
     <div class="">
@@ -33,7 +59,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for sitters in sitter %}
+                {% for sitters in siter %}
                 <tr>
                     <th scope="row">
                     <strong>{{ sitters.s_no }}</strong>
@@ -46,43 +72,54 @@
                     <td>
                     <a href="{% url 'readsitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
                     <a href="{% url 'updatesitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
-                    <a href="{% url 'deletesitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
-                    <a href="{% url 'assignsitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-car"></i></button></a>
+                    <a href="{% url 'deletesitter' sitters.id %}"><button type="button" class="btn btn-danger me-1"><i class="fa-solid fa-trash"></i></button></a>
+                    {% comment %} <a href="{% url 'assignsitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-car"></i></button></a> {% endcomment %}
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table> 
     </div>
-    <div class="">
-        <table class="table table-striped-columns">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">SITTER</th>
-                    <th scope="col">BABIES</th>
-                    <th scope="col">DATE</th>
-                    <th scope="col">PAY OUT</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for attendance in attendance_list %}
-                    <tr>
-                        <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{attendance.a_sitter.s_name}}</td>
-                        <td>
-                            {% for baby in attendance.a_baby.all %}
-                                <li>{{ baby.b_name }}</li>
-                                {% with counter=forloop.counter %}{% endwith %}
-                            {% endfor %}
-                        </td>
-                        <td>{{ attendance.a_payment_date }}</td>
-                        {% comment %} <td>{{ attendance.a_baby.all|length }}</td> {% endcomment %}
-                        <td>{{ attendance.total_payment }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+
+    <hr>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            
+        
+
+
+{% if siter.has_previous %}
+<li class="page-item">
+    <a href="?page=1" class="page-link">&laquo; First</a>
+</li>
+<li class="page-item">
+    <a href="?page={{siter.previous_page_number}}" class="page-link">Previous</a>
+</li>
+{% endif %}
+
+{% comment %} <li class="page-item disabled">
+    <a href="#"  class="page-link">
+page {{ siter.number}} of {{ siter.paginator.num_pages}}
+</a>
+</li> {% endcomment %}
+
+{% for i in nums %}
+<li class="page-item">
+    <a href="?page={{ forloop.counter }} "class="page-link">{{ forloop.counter }}</a>
+</li>
+
+{% endfor %}
+
+{% if siter.has_next %}
+<li class="page-item">
+    <a href="?page={{ siter.next_page_number }} "class="page-link">Next</a>
+</li>
+<li class="page-item">
+    <a href="?page={{ siter.paginator.num_pages }}"  class="page-link">Last &raquo;</a>
+</li>
+{% endif %}
+</ul>
+</nav>
+
 {% endblock %}

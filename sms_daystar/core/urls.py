@@ -31,13 +31,21 @@ urlpatterns = [
     path('viewsitter/<int:id>', views.readsitter, name='readsitter'),
     path('editsitter/<int:id>', views.updatesitter, name='updatesitter'),
     path('deletesitter/<int:id>', views.deletesitter, name='deletesitter'),
+    
+    path('add_schedule/', views.schedule_create, name='add_schedule'),
+    path('schedule/', views.schedule_list, name='schedule_list'),
+    path('schedule/<int:schedule_id>/edit/', views.edit_schedule, name='edit_schedule'),
+    
     path('assignsitter/<int:sitter_id>', views.assignsitter, name='assignsitter'), 
+    path('assign_view/', views.assign_view, name='assign_view'), 
+    
     
     # INVENTORY
     path('inventory/', views.inventoryreciept, name='inventory'),
     path('addinventory/', views.addinventory, name='addinventory'),
-    path('issues/<>int:id', views.issue, name='issue'),
-    path('items', views.all_issue_items, name='all_issue_items'),
+    # path('issues/<int:id>', views.issue, name='issue'),
+    path('issue/<int:inventory_id>/', views.issue_inventory, name='issue'),
+    path('items', views.view_issued_items, name='view_items'),
     
     # DOLLS
     path('viewdoll/', views.dollview, name='dollview'),
@@ -46,6 +54,15 @@ urlpatterns = [
     
     # FINANCE
     path('funds/', views.financeview, name='financeview'),
+    
+    
+    
+    path('payment/', views.make_payment, name='make_payment'),
+    path('attendance/<int:baby_id>/', views.record_attendance, name='record_attendance'),
+    
+    
+    # text
+    path('sitter_txt', views.sitter_txt, name='sitter_txt'),
 ]
 
 # purchaseorder

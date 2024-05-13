@@ -1,3 +1,10 @@
 fa-bank, bi-bank{
     color: #150D66;
 }
+
+.logo-font {
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: rgb(236, 33, 33);
+}

@@ -1,6 +1,45 @@
-<h1>Issue Item</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ issue_form.as_p }}
-        <button type="submit">Issue</button>
-    </form>
+{% extends "core/base.html" %}
+
+
+
+{% block content %}
+    <div class="">
+
+
+        <h1>Issue Item</h1>
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {% comment %} <div class="form-group">
+                <label for="item">Item:</label>
+                <select class="form-control" name="item" id="item" required>
+                    <option value="">Select an item</option> <!-- Add a default option -->
+                    {% for item in inventory_items %}
+                        <option value="{{ item.id }}">{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+            </div> {% endcomment %}
+            <div class="form-group">
+                <label for="quantity_issued">Quantity to issue:</label>
+                <input type="number" class="form-control" name="quantity_issued" id="quantity_issued" required>
+            </div>
+            <div class="form-group">
+                <label for="issued_to">Issued To:</label>
+                <input type="text" class="form-control" name="issued_to" id="issued_to" required>
+            </div>
+            <div class="form-group">
+                <label for="issue_date">Issue Date:</label>
+                <input type="date" class="form-control" name="issue_date" id="issue_date" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Issue Inventory</button>
+        </form>
+        
+        {% comment %} <form method="post">
+            {% csrf_token %}
+            {{ issue_form.as_p }}
+            <button type="submit">Issue</button>
+        </form> {% endcomment %}
+        
+    </div>
+{% endblock content %}
+

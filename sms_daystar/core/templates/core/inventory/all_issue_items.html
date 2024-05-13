@@ -1,11 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All Issued Items</title>
-</head>
-<body>
-    <h1>All Issued Items</h1>
+{% extends "core/base.html" %}
+
+
+
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5 mb-4">Issued Items</h1>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Quantity Issued</th>
+                <th scope="col">Issued To</th>
+                <th scope="col">Issue Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in issued_items %}
+            <tr>
+                <td>{{ item.item.name }}</td>
+                <td>{{ item.quantity_issued }}</td>
+                <td>{{ item.issued_To }}</td>
+                <td>{{ item.issue_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+</div>
+
+{% endblock content %}
+    
+
+    {% comment %} <h1>All Issued Items</h1>
     <table border="1">
         <thead>
             <tr>
@@ -26,6 +53,5 @@
     </table>
     <p>Total Issued Quantity: {{ total_issued_quantity }}</p>
     <p>Total Received Quantity: {{ total_received_quantity }}</p>
-    <p>Net Quantity: {{ net_quantity }}</p>
-</body>
-</html>
+    <p>Net Quantity: {{ net_quantity }}</p> {% endcomment %}
+

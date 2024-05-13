@@ -39,7 +39,9 @@
                         <td>{{items.unit_cost }} ugx</td>
                         <td>{{items.received_date}}</td>
                         <td>
-                            #####
+                            <a href="{% url 'issue' items.id %}" class="btn btn-info">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

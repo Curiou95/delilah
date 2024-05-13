@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+
+{% block page-title %}
+    <div class=" d-flex align-items-center">
+        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
+        <h1>   
+            ASSIGN SITTER
+        </h1>
+    </div>
+    
+
+{% endblock page-title %}
+
+
+
+{% block addlink %} {% url 'addsitter' %} {% endblock addlink %}
+
+
+
+{% block title %}
+    DayStar | AssignSitterPage
+{% endblock title %}
+
+{% block content %}
+
+    <div class="">
+        <h1>
+            {{sitters.s_name }} is not available
+        </h1>
+    </div>
+{% endblock content %}

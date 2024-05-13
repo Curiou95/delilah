@@ -1,0 +1,67 @@
+
++{% extends "core/base.html" %}
+{% load static %}
+
+
+
+{% block addlink %} {% url 'addbaby' %} {% endblock addlink %}
+
+
+
+{% block title %}
+    DayStar | BabyPage
+{% endblock title %}
+
+{% block page-title %}
+    <div class=" d-flex align-items-center">
+        <i class="fa-solid fa-baby text-primary" style="font-size: 80px;"></i>
+        <h1>   
+            schedule
+        </h1>
+    </div>
+    
+
+{% endblock page-title %}
+
+{% block buttons %}
+    <a href=" {% url 'add_schedule' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-plus"></i>
+        </span>
+        <span>Schedule Sitter</span>
+    </a>
+{% endblock buttons %}
+
+{% block content %}
+<div class="">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Sitter</th>
+                <th scope="col">Date</th>
+                <th scope="col">On/Off Duty </th>
+                <th scope="col">Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedules %}
+                <tr>
+                    
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{schedule.sitter.s_name}}</td>
+                        <td>{{schedule.date}}</td>
+                        <td>{{schedule.is_working}}</td>
+                        <td>
+                            <a href="{% url 'edit_schedule' schedule.id %}">
+                                <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    
+                </tr>
+            {% endfor %}
+                
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

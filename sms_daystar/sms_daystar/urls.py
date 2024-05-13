@@ -21,3 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
 ]
+
+
+admin.site.site_header = 'Madiba\'s DayStar Admin'
+admin.site.index_title = 'Wlecome to Daystar Super Admin'
