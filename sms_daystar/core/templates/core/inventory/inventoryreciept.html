@@ -12,6 +12,35 @@
 
 {% block addlink %} {% url 'addinventory' %} {% endblock addlink %}
 
+{% block buttons %}
+    
+    
+    <a href=" {% url 'addinventory' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-plus"></i>
+        </span>
+        <span>Add Inventory</span>
+    </a>
+    <a href=" {% url 'issue' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-plus"></i>
+        </span>
+        <span>Issue Inventory</span>
+    </a>
+    <a href=" {% url 'view_items' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-plus"></i>
+        </span>
+        <span>View Issued</span>
+    </a>
+
+    
+{% endblock buttons %}
+
+
+
+
+
 {% block content %}
 
 
@@ -36,13 +65,17 @@
                         <td>{{items.category}}</td>
                         <td>{{items.name}}</td>
                         <td>{{items.quantity}}</td>
-                        <td>{{items.unit_cost }} ugx</td>
+                        <td>shs.{{items.unit_cost }} </td>
                         <td>{{items.received_date}}</td>
                         <td>
-                            <a href="{% url 'issue' items.id %}" class="btn btn-info">
-                                <i class="fa-solid fa-plus"></i>
+                            <a href="" class="btn btn-primary" >
+                                <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                            </a>
+                            <a href="" class="btn btn-danger">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                         </td>
+                        
                     </tr>
                 {% endfor %}
             </tbody>

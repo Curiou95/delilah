@@ -1,13 +1,37 @@
-{% extends "core/base.html" %}
-
-
-
-
+{% extends 'core/base.html' %}
 
 {% block content %}
     <h1>viewing full baby details</h1>
 
-    {{ baby.b_name }} <br>
-    {{ baby.b_dob }} <br>
-    {{ baby.b_parent }} 
-{% endblock content %}
+    {{ baby.b_name }} <br />
+    {{ baby.b_dob }} <br />
+    {{ baby.b_parent }}
+<br><br><br><br>
+    <td>
+        {% comment %} Number of checkins: {{ baby.checkins.count }} {% endcomment %}
+        <a href="{% url 'checkin' baby.id %}" class="btn btn-info">checkin</a>
+        
+    </td>
+    <td>{{ baby.checkins.last.checked_in_by }}</td>
+    <td>
+        {% if baby.checkins.exists %}
+            {% with last_checkout=baby.checkins.last %}
+            {% comment %} Last checkout exists: {{ last_checkout|yesno:"Yes,No" }} {% endcomment %}
+                {% if last_checkout.exists %}
+                    Checked In at {{ last_checkout.checkout_time|time:"H:i" }}
+                {% else %}
+                    <a href="{% url 'checkout' baby.checkins.last.id %}" class="btn btn-danger">checkout</a>
+                {% endif %}
+            {% endwith %}
+        {% else %}
+            Not Checked Out
+        {% endif %}
+    </td>
+    <td>
+        {% if baby.checkins.exists %}
+            {% if baby.checkins.last.exists %}
+                {{ baby.checkins.last.checkouts.last.checked_out_by }}
+            {% endif %}
+        {% endif %}
+    </td>
+{% endblock %}

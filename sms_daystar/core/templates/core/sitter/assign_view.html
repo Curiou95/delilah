@@ -29,6 +29,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">SITTER</th>
+                <th scope="col">STATUS</th>
                 <th scope="col">BABIES</th>
                 <th scope="col">DATE</th>
                 <th scope="col">PAY OUT</th>
@@ -40,6 +41,7 @@
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{attendance.a_sitter.s_name}}</td>
+                    <td>{{attendance.status}}</td>
                     <td>
                         {% for baby in attendance.a_baby.all %}
                             <li>{{ baby.b_name }}</li>

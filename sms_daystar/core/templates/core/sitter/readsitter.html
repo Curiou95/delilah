@@ -45,7 +45,7 @@
                                                 >EDIT
                                             </button>
                                         </a>
-                                        <a href="{% url 'assignsitter' sitter.id %}"
+                                        <a href="{% url 'assignsitter' sitter.id  %}"
                                             ><button
                                                 class="btn btn-primary"
                                                 type="button"
@@ -54,8 +54,12 @@
                                                     class="fa fa-pen"
                                                     aria-hidden="true"
                                                 ></i
-                                                >Assign
+                                                >Assign 
                                             </button>
+                                        </a>
+                                        <a href=""
+                                            >
+                                            <input type="checkbox" name="s_available" id="s_available">
                                         </a>
                                     </div>
                                 </div>

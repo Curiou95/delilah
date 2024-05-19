@@ -19,7 +19,7 @@
                     {% endfor %}
                 </select>
             </div> {% endcomment %}
-            <div class="form-group">
+            {% comment %} <div class="form-group">
                 <label for="quantity_issued">Quantity to issue:</label>
                 <input type="number" class="form-control" name="quantity_issued" id="quantity_issued" required>
             </div>
@@ -32,13 +32,13 @@
                 <input type="date" class="form-control" name="issue_date" id="issue_date" required>
             </div>
             <button type="submit" class="btn btn-primary">Issue Inventory</button>
-        </form>
-        
-        {% comment %} <form method="post">
-            {% csrf_token %}
-            {{ issue_form.as_p }}
-            <button type="submit">Issue</button>
         </form> {% endcomment %}
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Issue</button>
+        </form> 
         
     </div>
 {% endblock content %}

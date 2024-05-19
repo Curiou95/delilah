@@ -4,14 +4,26 @@
 
 
 {% block content %}
-    <div class="">
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+
+    <div class="container mt-3">
+        {% if dolls %}
+            <div class="row">
+                {% for item in dolls %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="Placeholder Image">
+                            <div class="card-body">
+                                <h5 class="card-title"> <strong>{{ item.name }}</strong> </h5>
+                                <p class="card-text">{{ item.category.description }}</p>
+                                <p class="card-text">Unit Cost: shs.{{ item.unit_cost }}</p>
+                                <a href="{% url 'saledoll' item.pk %}" class="btn btn-primary">Sale</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
+        {% else %}
+            <p>No items found in this category.</p>
+        {% endif %}
     </div>
 {% endblock content %}

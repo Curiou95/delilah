@@ -1,8 +1,28 @@
 from django.db import models
 from django.utils import timezone
 from datetime import date
+import re
+from django.core.exceptions import ValidationError
 
 # Create your models here.
+
+
+
+
+# Create your models here.
+
+def validate_letters(value):
+    if not re.match("^([a-zA-Z]+\s)*[a-zA-Z]+$", value):
+        raise ValidationError("Only letters are allowed.")
+def validate_numbers(value):
+    if not re.match("^[0-9]*$", value):
+        raise ValidationError("Only numbers are allowed.")
+
+def validate_contacts(value):
+    if len(value) != 10:
+        raise ValidationError("Contact field must contain exactly 10 digits.")
+
+
 
 
 class StayPeriod(models.Model):
@@ -35,14 +55,6 @@ class Baby(models.Model):
     b_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     is_subscribed_monthly = models.BooleanField(default=False)
 
-    # def check_in(self):
-    #     self.last_checkin_time = timezone.now()
-    #     self.save()
-
-    # def check_out(self):
-    #     self.last_checkout_time = timezone.now()
-    #     self.save()
-        
     def __str__(self):
         return self.b_name
 
@@ -79,6 +91,7 @@ class Sitter(models.Model):
     s_educ_level = models.CharField(max_length=100)
     s_email = models.EmailField(max_length=150)
     s_tel = models.IntegerField()
+    # s_available = models.BooleanField(default=True)
     def __str__(self):
         return self.s_name
 
@@ -87,6 +100,10 @@ class Attendance(models.Model):
     a_sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
     a_baby = models.ManyToManyField(Baby)
     a_payment_date = models.DateTimeField()
+    status = models.CharField(max_length=50,null=True,choices=(
+        ('on duty', 'ON DUTY'),
+        ('off duty', 'OFF DUTY'),
+    ))
     
     class Meta:
         unique_together = ['a_payment_date', 'a_sitter']
@@ -94,12 +111,6 @@ class Attendance(models.Model):
     def __str__(self):
         return f"{self.a_sitter.s_name} assigned to {', '.join(str(b) for b in self.a_baby.all())} on {self.a_payment_date}"
 
-# class Day(models.Model):
-#     name = models.DateField() # E.g., Monday, Tuesday, etc.
-
-#     def __str__(self):
-#         return self.name
-    
 class Schedule(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
@@ -131,15 +142,6 @@ class Fees(models.Model):
     def __str__(self):
         return f"{self.f_baby.b_name} "
 
-class Baby_Attendance(models.Model):
-    baby = models.ForeignKey(Baby, on_delete=models.CASCADE)
-    arrival_time = models.DateTimeField()
-    departure_time = models.DateTimeField(null=True, blank=True)
-    brought_by = models.CharField(max_length=100)  # Who brought the baby
-    picked_by = models.CharField(max_length=100, blank=True, null=True)  # Who picked up the baby
-
-    def __str__(self):
-        return f"{self.baby.name} - {self.arrival_time}"
 
 # SITTER PAYMENT model
 
@@ -158,7 +160,7 @@ class InventoryCategory(models.Model):
 
 
 class Inventory_Items(models.Model):
-    category = models.ForeignKey(InventoryCategory, on_delete=models.CASCADE, blank=True,null=True)
+    category = models.ForeignKey(InventoryCategory, on_delete=models.CASCADE, blank=True,null=True, related_name='items')
     name = models.CharField(max_length=80,blank=True, null=True)
     quantity = models.PositiveIntegerField()
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True,null=True)
@@ -173,21 +175,32 @@ class Issue_Inventory(models.Model):
     issue_date = models.DateTimeField(auto_now_add=True)
     issued_To = models.CharField(max_length=100)
     
+    def save(self, *args, **kwargs):
+        # Reduce the quantity of the item in inventory when an issue is made
+        self.item.quantity -= self.quantity_issued
+        self.item.save()
+        super().save(*args, **kwargs)
+    
     def __str__(self):
         return f"{self.quantity_issued} {self.item.name} issued to {self.issued_To} on {self.issue_date}"
 
 
 # dolls 
 
+class Sale(models.Model):
+    inventory_item = models.ForeignKey(Inventory_Items, on_delete=models.CASCADE)
+    quantity_sold = models.PositiveIntegerField()
+    sale_date = models.DateTimeField(auto_now_add=True)
+    sold_to = models.ForeignKey(Baby, on_delete=models.CASCADE)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
-# class ResaleItem(models.Model):
-#     supply = models.OneToOneField(InventorySupplyReceipt, on_delete=models.CASCADE)
-#     price = models.DecimalField(max_digits=10, decimal_places=2)
-#     quantity_available = models.PositiveIntegerField()
+    def save(self, *args, **kwargs):
+        # Reduce the quantity of the item in inventory when a sale is made
+        self.item.quantity -= self.quantity_sold
+        self.item.save()
+        super().save(*args, **kwargs)
 
-#     def __str__(self):
-#         return f"{self.supply.name} - Price: {self.price} - Available: {self.quantity_available}"
-
-
+    def __str__(self):
+        return f"{self.quantity_sold} {self.item.name} sold to {self.sold_to} on {self.sale_date}"
 
 

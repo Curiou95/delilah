@@ -55,6 +55,7 @@
                 <th scope="col">Location</th>
                 <th scope="col">Recommender</th>
                 <th scope="col">Education level</th>
+                <th scope="col">On/Off Duty</th>
                 <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -83,43 +84,34 @@
 
     <hr>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            
-        
+<nav aria-label="Page navigation example">
 
+    <ul class="pagination justify-content-center">
+        {% if siter.has_previous %}
+            <li class="page-item">
+                <a href="?page=1" class="page-link">&laquo; First</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{siter.previous_page_number}}" class="page-link">Previous</a>
+            </li>
+        {% endif %}
 
-{% if siter.has_previous %}
-<li class="page-item">
-    <a href="?page=1" class="page-link">&laquo; First</a>
-</li>
-<li class="page-item">
-    <a href="?page={{siter.previous_page_number}}" class="page-link">Previous</a>
-</li>
-{% endif %}
+        {% for i in nums %}
+            <li class="page-item">
+                <a href="?page={{ forloop.counter }} "class="page-link">{{ forloop.counter }}</a>
+            </li>
+        {% endfor %}
 
-{% comment %} <li class="page-item disabled">
-    <a href="#"  class="page-link">
-page {{ siter.number}} of {{ siter.paginator.num_pages}}
-</a>
-</li> {% endcomment %}
-
-{% for i in nums %}
-<li class="page-item">
-    <a href="?page={{ forloop.counter }} "class="page-link">{{ forloop.counter }}</a>
-</li>
-
-{% endfor %}
-
-{% if siter.has_next %}
-<li class="page-item">
-    <a href="?page={{ siter.next_page_number }} "class="page-link">Next</a>
-</li>
-<li class="page-item">
-    <a href="?page={{ siter.paginator.num_pages }}"  class="page-link">Last &raquo;</a>
-</li>
-{% endif %}
-</ul>
+        {% if siter.has_next %}
+            <li class="page-item">
+                <a href="?page={{ siter.next_page_number }} "class="page-link">Next</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{ siter.paginator.num_pages }}"  class="page-link">Last &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+    
 </nav>
 
 {% endblock %}

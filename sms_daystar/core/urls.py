@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
+    # landing and dashboard
     path('', views.index, name='index'),
     path('home/', views.home, name='home'),
     
@@ -18,9 +19,8 @@ urlpatterns = [
     path('viewbaby/<int:id>', views.readbaby, name='readbaby'),
     path('editbaby/<int:id>', views.updatebaby, name='updatebaby'),
     path('deletebaby/<int:id>', views.deletebaby, name='deletebaby'),
+    
     # babycheckin babycheckout
-    # path('checkin/<int:baby_id>/', views.checkin, name='checkin'),
-    # path('checkout/<int:baby_id>/', views.checkout, name='checkout'),
     path('checkin/<int:baby_id>', views.checkin, name='checkin'),
     path('checkout/<int:checkin_id>/', views.checkout, name='checkout'),
     
@@ -32,11 +32,13 @@ urlpatterns = [
     path('editsitter/<int:id>', views.updatesitter, name='updatesitter'),
     path('deletesitter/<int:id>', views.deletesitter, name='deletesitter'),
     
+    # sitter scheduling
     path('add_schedule/', views.schedule_create, name='add_schedule'),
     path('schedule/', views.schedule_list, name='schedule_list'),
     path('schedule/<int:schedule_id>/edit/', views.edit_schedule, name='edit_schedule'),
     
-    path('assignsitter/<int:sitter_id>', views.assignsitter, name='assignsitter'), 
+    # assigning babies
+    path('assignsitter/', views.assignsitter, name='assignsitter'), 
     path('assign_view/', views.assign_view, name='assign_view'), 
     
     
@@ -44,12 +46,13 @@ urlpatterns = [
     path('inventory/', views.inventoryreciept, name='inventory'),
     path('addinventory/', views.addinventory, name='addinventory'),
     # path('issues/<int:id>', views.issue, name='issue'),
-    path('issue/<int:inventory_id>/', views.issue_inventory, name='issue'),
+    path('issue/', views.issue_inventory, name='issue'),
     path('items', views.view_issued_items, name='view_items'),
     
     # DOLLS
-    path('viewdoll/', views.dollview, name='dollview'),
-    
+    path('saledoll/<int:id>', views.make_sale, name='saledoll'),
+    # path('dolllist/', views.doll_list, name='dolllist'),
+    path('viewdoll/', views.dollview, name='dollview'), 
     
     
     # FINANCE
@@ -58,7 +61,6 @@ urlpatterns = [
     
     
     path('payment/', views.make_payment, name='make_payment'),
-    path('attendance/<int:baby_id>/', views.record_attendance, name='record_attendance'),
     
     
     # text

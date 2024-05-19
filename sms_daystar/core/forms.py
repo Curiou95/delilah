@@ -14,10 +14,6 @@ class BabyForm(forms.ModelForm):
         fields = "__all__"
 
 
-# class CheckInForm(forms.ModelForm):
-#     class Meta:
-#         model = CheckIn
-#         fields = ['baby', 'checked_in_by']
 class CheckInForm(forms.Form):
     checked_in_by = forms.CharField(max_length=100, label="Who brought the baby?")
 
@@ -46,40 +42,32 @@ class SitterForm(forms.ModelForm):
             "s_tel",
         ]
 
-        def clean(self):
-            cleaned_data = super().clean()
-            s_no = cleaned_data.get("s_no")
-            s_name = cleaned_data.get("s_name")
-            s_dob = cleaned_data.get("s_dob")
-            s_location = cleaned_data.get("s_location")
-            s_gender = cleaned_data.get("s_gender")
-            s_nok = cleaned_data.get("s_nok")
-            s_NIN = cleaned_data.get("s_NIN")
-            s_recomender = cleaned_data.get("s_recomender")
-            s_religion = cleaned_data.get("s_religion")
-            s_educ_level = cleaned_data.get("s_educ_level")
-            s_email = cleaned_data.get("s_email")
-            s_tel = cleaned_data.get("s_tel")
+        # def __init__(self, *args, **kwargs):
+        #     super().__init__(*args, **kwargs)
+        #     # Set the initial value of the checkbox based on s_available
+        #     if self.instance.pk and self.instance.s_available:
+        #         self.initial['s_available_checkbox'] = True
 
-            if not s_name:
-                self.add_error("s_name", "This field is required.")
-            elif len(s_name) < 5:
-                self.add_error("s_name", "Name should be atleast 6 letters")
-            if s_location != "Kabalagala":
-                self.add_error("s_location", "People outside Kabalagala are invalid")
-            if not s_nok:
-                self.add_error("s_nok", "This field is required.")
-            elif len(s_nok) < 5:
-                self.add_error("s_nok", "Name should be atleast 6 letters")
-            if not s_recomender:
-                self.add_error("s_recomender", "This field is required.")
-            elif len(s_recomender) < 5:
-                self.add_error("s_recomender", "Name should be atleast 6 letters")
+        # def clean(self):
+        #     cleaned_data = super().clean()
+        #     s_available_checkbox = cleaned_data.get('s_available_checkbox')
+        #     # If the checkbox is checked, set s_available to True, else False
+        #     cleaned_data['s_available'] = s_available_checkbox
+        #     return cleaned_data
+
+        # def save(self, commit=True):
+        #     instance = super().save(commit=False)
+        #     instance.s_available = self.cleaned_data['s_available']
+        #     if commit:
+        #         instance.save()
+        #     return instance
 
         widgets = {
             "s_no": forms.TextInput(attrs={"class": "form-control s_no"}),
             "s_name": forms.TextInput(attrs={"class": "form-control s_name"}),
-            "s_dob": forms.DateInput(attrs={"class": "form-control s_dob"}),
+            "s_dob": forms.DateInput(
+                attrs={"class": "form-control s_dob", "type": "date"}
+            ),
             "s_location": forms.TextInput(attrs={"class": "form-control s_location"}),
             "s_gender": forms.Select(attrs={"class": "form-control s_gender"}),
             "s_nok": forms.TextInput(attrs={"class": "form-control s_nok"}),
@@ -87,7 +75,7 @@ class SitterForm(forms.ModelForm):
             "s_recomender": forms.TextInput(
                 attrs={"class": "form-control s_recomender"}
             ),
-            "s_religion": forms.TextInput(attrs={"class": "form-control s_religion"}),
+            "s_religion": forms.TextInput(attrs={"class": "form-control  s_religion"}),
             "s_educ_level": forms.TextInput(
                 attrs={"class": "form-control s_educ_level"}
             ),
@@ -125,7 +113,7 @@ class SitterForm(forms.ModelForm):
 class ScheduleForm(forms.ModelForm):
     class Meta:
         model = Schedule
-        fields = '__all__'
+        fields = "__all__"
 
 
 class FeesForm(forms.ModelForm):
@@ -134,20 +122,17 @@ class FeesForm(forms.ModelForm):
         fields = "__all__"
 
 
-class Baby_AttendanceForm(forms.ModelForm):
-    class Meta:
-        model = Baby_Attendance
-        fields = ["arrival_time", "departure_time", "brought_by", "picked_by"]
-
-
 class AttendanceForm(forms.ModelForm):
     payment = forms.DecimalField(widget=forms.HiddenInput, required=False)
 
     class Meta:
         model = Attendance
-        fields = ["a_sitter", "a_baby", "a_payment_date"]
+        fields = ["a_sitter", "status", "a_baby", "a_payment_date"]
         widgets = {
             "a_baby": forms.CheckboxSelectMultiple(attrs={"class": "checkbox"}),
+            "a_payment_date": forms.DateInput(
+                attrs={"class": "form-control ", "type": "date"}
+            ),
         }
 
 
@@ -167,3 +152,18 @@ class Issue_InventoryForm(forms.ModelForm):
     class Meta:
         model = Issue_Inventory
         fields = "__all__"
+
+
+class SaleForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        fields = [ "inventory_item", "quantity_sold", "sold_to", "total_price"]
+
+        def clean(self):
+            cleaned_data = super().clean()
+            inventory_item = cleaned_data.get("inventory_item")
+            if inventory_item and inventory_item.category.name != "DOLLS":
+                raise forms.ValidationError(
+                    "Sales can only be made for items in the doll category."
+                )
+            return cleaned_data
