@@ -53,6 +53,7 @@ urlpatterns = [
     path('saledoll/<int:id>', views.make_sale, name='saledoll'),
     # path('dolllist/', views.doll_list, name='dolllist'),
     path('viewdoll/', views.dollview, name='dollview'), 
+    path('sold-dolls/', views.sold_dolls_view, name='sold_dolls'),
     
     
     # FINANCE

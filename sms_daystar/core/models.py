@@ -173,7 +173,7 @@ class Issue_Inventory(models.Model):
     item = models.ForeignKey(Inventory_Items, on_delete=models.CASCADE)
     quantity_issued = models.PositiveIntegerField()
     issue_date = models.DateTimeField(auto_now_add=True)
-    issued_To = models.CharField(max_length=100)
+    issued_To = models.ForeignKey(Sitter, on_delete=models.CASCADE, blank=True, null=True)
     
     def save(self, *args, **kwargs):
         # Reduce the quantity of the item in inventory when an issue is made
@@ -196,8 +196,8 @@ class Sale(models.Model):
 
     def save(self, *args, **kwargs):
         # Reduce the quantity of the item in inventory when a sale is made
-        self.item.quantity -= self.quantity_sold
-        self.item.save()
+        self.inventory_item.quantity -= self.quantity_sold
+        self.inventory_item.save()
         super().save(*args, **kwargs)
 
     def __str__(self):

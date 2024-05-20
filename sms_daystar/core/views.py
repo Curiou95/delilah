@@ -74,12 +74,12 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect("index")
+            return redirect("home")
         else:
             messages.info(request, "Username or Password is Incorrect")
             return redirect("login")
     else:
-        return render(request, "core/login.html")
+        return render(request, "core/sign-in.html")
 
 
 @login_required
@@ -99,16 +99,33 @@ def logout(request):
 # =================================================================
 # DASHBOARD VIEW
 # =================================================================
-@login_required
+
 def home(request):
-    return render(request, "core/dash.html")
+    no_of_babies = Baby.objects.all().count()
+    no_of_sitters = Sitter.objects.all().count()
+    daily_babies = Baby.objects.filter(b_stayperiod__sp_name__in = ['halfday','fullday']).count()
+    monthly_babies = Baby.objects.filter(b_stayperiod__sp_name__in = ['monthly-halfday','monthly-fullday']).count()
+    total_payments_sum = Fees.objects.aggregate(total_sum=Sum('amount'))['total_sum']
+    fees_per_day = Fees.objects.values('payment_date').annotate(total_amount=Sum('amount')).order_by('payment_date').count()
+    dolls_sold = Sale.objects.filter(inventory_item__category__name='dolls').count()
+    
+    context = {
+        'no_of_babies': no_of_babies,
+        'no_of_sitters': no_of_sitters,
+        'daily_babies': daily_babies,
+        'monthly_babies': monthly_babies,
+        'total_payments_sum': total_payments_sum,
+        'fees_per_day': fees_per_day,
+        'dolls_sold': dolls_sold,
+    }
+    return render(request, "core/dash.html",context)
 
 
 # =================================================================
 # BABY VIEWS
 # =================================================================
 
-@login_required
+
 def babies(request):
     # babies_data = Baby.objects.annotate(
 
@@ -126,13 +143,13 @@ def babies(request):
     return render(request, "core/baby/viewbabies.html", context)
 
 
-@login_required
+
 def readbaby(request, id):
     baby = Baby.objects.get(id=id)
     return render(request, "core/baby/readbaby.html", {"baby": baby})
 
 
-@login_required
+
 def createbaby(request):
     if request.method == "POST":
         form = BabyForm(request.POST)
@@ -150,7 +167,7 @@ def createbaby(request):
     return render(request, "core/baby/createbaby.html", context)
 
 
-@login_required
+
 def updatebaby(request, id):
     baby = Baby.objects.get(id=id)
     if request.method == "POST":
@@ -163,7 +180,7 @@ def updatebaby(request, id):
     return render(request, "core/baby/createbaby.html", {"form": form, "baby": baby})
 
 
-@login_required
+
 def deletebaby(request, id):
     baby = Baby.objects.get(id=id)
     if request.method == "POST":
@@ -283,6 +300,13 @@ def deletesitter(request, id):
         return redirect(reverse("viewsitter"))
     return render(request, "core/sitter/deletesitter.html", {"sitter": sitter})
 
+# def archive_sitter(request, pk):
+#     sitter = get_object_or_404(Sitter, pk=pk)
+#     if request.method == "POST":
+#         sitter.archived = not sitter.archived  # Toggle the archived status
+#         sitter.save()
+#         return redirect('viewsitter')  # Redirect to some URL after archiving
+#     return render(request, "core/sitter/archievesitter.html", {"sitter": sitter})
 
 # TEXT FILE DOWNLOAD
 def sitter_txt(request):
@@ -452,37 +476,66 @@ def view_issued_items(request):
 
 @login_required
 def dollview(request):
-    dolls = Inventory_Items.objects.filter(category__name='DOLLS')
+    dolls = Inventory_Items.objects.filter(category__name='dolls')
     return render(
         request, "core/dolls/dollview.html", {"dolls": dolls}
     )
 
-# def readsitter(request, id):
-#     sitter = Sitter.objects.get(id=id)
-#     baby = Baby.objects.filter(attendance__a_sitter_id=id)
-#     context = {"sitter": sitter, "baby": baby}
-#     return render(request, "core/sitter/readsitter.html", context)
+
 
 
 @login_required
 def make_sale(request, id):
-    doll = Inventory_Items.objects.get(id=id)
+    doll = get_object_or_404(Inventory_Items, id=id, category__name='dolls')
+    # doll = Inventory_Items.objects.get(id=id)
     if request.method == "POST":
-        form = SaleForm(request.POST, instance=doll)
+        form = SaleForm(request.POST)
         if form.is_valid():
-            # form.save()
             sale = form.save(commit=False)
-            item = sale.inventory_item
-            # check if item is belongs to dolls
-            if item.category.name == 'DOLLS':
-                sale.save()
-                return redirect("dollview")
+            # Ensure the item being sold is a doll
+            if doll:
+                # Ensure the quantity being sold does not exceed the available quantity
+                if sale.quantity_sold <= doll.quantity:
+                    # Update the quantity of the item in inventory
+                    doll.quantity -= sale.quantity_sold
+                    doll.save()
+                    
+                    # Set the inventory_item field of the sale object
+                    sale.inventory_item = doll
+                    
+                    # Calculate the total price based on quantity sold and unit cost
+                    sale.total_price = sale.quantity_sold * doll.unit_cost
+                    
+                    sale.save()
+                    return redirect("dollview")
+                else:
+                    form.add_error('quantity_sold', f'Only {doll.quantity} {doll.name} available')
             else:
-                form.add_error(None, 'We only sale dolls!!!!')
+                form.add_error(None, 'Invalid doll ID')
     else:
+        form = SaleForm()
+    # if request.method == "POST":
+    #     form = SaleForm(request.POST, instance=doll)
+    #     if form.is_valid():
+    #         # form.save()
+    #         sale = form.save(commit=False)
+    #         item = sale.inventory_item
+    #         # check if item is belongs to dolls
+    #         if item.category.name == 'DOLLS':
+    #             sale.save()
+    #             return redirect("dollview")
+    #         else:
+    #             form.add_error(None, 'We only sale dolls!!!!')
+    # else:
         
-        form = SaleForm(instance=doll)
+    #     form = SaleForm(instance=doll)
     return render(request, "core/inventory/make_sale.html", {"form": form})
+
+def sold_dolls_view(request):
+    # Query all sales where dolls were sold
+    sold_dolls = Sale.objects.filter(inventory_item__category__name='dolls')
+
+    return render(request, "core/dolls/sold_dolls.html", {"sold_dolls": sold_dolls})
 
 # ==========================================================================
 # END DOLLS
@@ -502,7 +555,7 @@ def financeview(request):
     return render(request, "core/finance/financeview.html", {'fee': fee})
 
 @login_required
-def make_payment(request):
+def make_payment(request): 
     if request.method == "POST":
         form = FeesForm(request.POST)
         if form.is_valid():

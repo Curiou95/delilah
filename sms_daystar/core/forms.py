@@ -12,6 +12,17 @@ class BabyForm(forms.ModelForm):
     class Meta:
         model = Baby
         fields = "__all__"
+        widgets = {
+            'b_no': forms.TextInput( attrs={'class':'form-control'}),
+            'b_name': forms.TextInput(attrs={'class':'form-control'}),
+            "b_dob": forms.DateInput(
+                attrs={"class": "form-control", "type": "date"}
+            ),
+            'b_gender': forms.Select(attrs={'class':'form-control'}),
+            'b_location': forms.TextInput(attrs={'class':'form-control'}),
+            'b_parent': forms.TextInput(attrs={'class':'form-control'}),
+            'b_stayperiod': forms.Select(attrs={'class':'form-control'}),
+        }
 
 
 class CheckInForm(forms.Form):
@@ -140,18 +151,31 @@ class InventorySupplyForm(forms.ModelForm):
     class Meta:
         model = InventoryCategory
         fields = "__all__"
+    
 
 
 class Inventory_ItemsForm(forms.ModelForm):
     class Meta:
         model = Inventory_Items
         fields = "__all__"
+        widgets = {
+            'category': forms.Select(attrs={'class':'form-control'}),
+            'name': forms.TextInput(attrs={'class':'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class':'form-control'}),
+            'unit_cost': forms.NumberInput(attrs={'class':'form-control'}),
+            'received_date': forms.DateInput(attrs={'class':'form-control', "type": "date"}),
+        }
 
 
 class Issue_InventoryForm(forms.ModelForm):
     class Meta:
         model = Issue_Inventory
         fields = "__all__"
+        widgets = {
+            'item': forms.Select(attrs={'class':'form-control'}),
+            'issued_To': forms.Select(attrs={'class':'form-control'}),
+            'quantity_issued': forms.NumberInput(attrs={'class':'form-control'}),
+        }
 
 
 class SaleForm(forms.ModelForm):

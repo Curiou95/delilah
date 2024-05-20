@@ -2,9 +2,94 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid d-flex align-items-center justify-content-center">
+{% comment %} <div class="container-fluid d-flex align-items-center justify-content-center">
     <img src="{% static 'images/man_at_work.png' %}" alt="working" />
-</div> 
+</div>  {% endcomment %}
 
+
+<div class="container m-2">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Babies Available</h5>
+                    <p class="card-text">{{ no_of_babies }}</p>
+                    <a href="{% url 'viewbaby' %}" class="card-link btn btn-primary">View All Babies</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Sitters</h5>
+                    <p class="card-text">{{ no_of_sitters }}</p>
+                    <a href="{% url 'viewsitter' %}" class="card-link btn btn-primary">View All Sitters</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Daily Fees</h5>
+                    <p class="card-text">{{ total_payments_sum }}</p>
+                    <a href="{% url 'viewsitter' %}" class="card-link btn btn-primary">View All Payments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Dolls Sold</h5>
+                    <p class="card-text">{{ dolls_sold }}</p>
+                    <a href="{% url 'dollview' %}" class="card-link btn btn-primary">View All Dolls</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <center>
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Registration Statistics</h5>
+                        <canvas id="userChart" width="400" height="400"></canvas>
+                    </div>
+                </center>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // JavaScript code to render the pie chart
+    var ctx = document.getElementById('userChart').getContext('2d');
+    var userChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Babies registered for Monthly ', 'Babies registered for Daily'],
+            datasets: [{
+                label: 'User Distribution',
+                data: [{{ monthly_babies }}, {{ daily_babies }}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',  // Red color for Monthly Users
+                    'rgba(54, 162, 235, 0.5)'   // Blue color for Daily Users
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            // Add any other options as needed
+        }
+    });
+</script>
 {% endblock content %}
 
