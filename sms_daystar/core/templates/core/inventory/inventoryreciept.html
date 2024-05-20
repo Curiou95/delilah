@@ -82,6 +82,39 @@
         </table>
     </div>
 
+    
+    <hr>
+
+<nav aria-label="Page navigation example">
+
+    <ul class="pagination justify-content-center">
+        {% if inventory.has_previous %}
+            <li class="page-item">
+                <a href="?page=1" class="page-link">&laquo; First</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{inventory.previous_page_number}}" class="page-link">Previous</a>
+            </li>
+        {% endif %}
+
+        {% for i in nums %}
+            <li class="page-item">
+                <a href="?page={{ forloop.counter }} "class="page-link">{{ forloop.counter }}</a>
+            </li>
+        {% endfor %}
+
+        {% if inventory.has_next %}
+            <li class="page-item">
+                <a href="?page={{ inventory.next_page_number }} "class="page-link">Next</a>
+            </li>
+            <li class="page-item">
+                <a href="?page={{ inventory.paginator.num_pages }}"  class="page-link">Last &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+    
+</nav>
+
 
 {% endblock content %}
 

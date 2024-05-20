@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <h1>Register Onduty</h1>
+
+
+    <p>Are you sure you want to Add "{{ sitter }}"</p>
+
+    <form action=" {% url 'regduty' sitter.id %} " method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="ADD" name="confirm ">
+        <a href="{% url 'viewsitter' %}">No</a>
+    </form>
+{% endblock content %}   

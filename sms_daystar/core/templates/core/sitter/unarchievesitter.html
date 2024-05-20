@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <h1>Unarchive Sitter</h1>
+
+
+    <p>Are you sure you want to unarchive  "{{ sitter }}"</p>
+
+    <form action=" {% url 'unarchive_sitter' sitter.id %} " method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-success" value="un Archive" name="confirm ">
+        <a href="{% url 'viewsitter' %}">No</a>
+    </form>
+{% endblock content %}   

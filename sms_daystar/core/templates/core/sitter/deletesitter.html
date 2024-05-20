@@ -4,11 +4,11 @@
     <h1>Delete Sitter</h1>
 
 
-    <p>Are you sure you want to delete this Sitter "{{ sitter }}"</p>
+    <p>Are you sure you want to delete  "{{ sitter }}"</p>
 
     <form action=" {% url 'deletesitter' sitter.id %} " method="POST">
         {% csrf_token %}
-        <input type="submit" class="btn btn-danger" value="Yes" name="confirm ">
+        <input type="submit" class="btn btn-danger" value="Archive" name="confirm ">
         <a href="{% url 'viewsitter' %}">No</a>
     </form>
 {% endblock content %}   

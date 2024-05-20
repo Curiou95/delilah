@@ -79,7 +79,7 @@ class SitterForm(forms.ModelForm):
             "s_dob": forms.DateInput(
                 attrs={"class": "form-control s_dob", "type": "date"}
             ),
-            "s_location": forms.TextInput(attrs={"class": "form-control s_location"}),
+            "s_location": forms.Select(attrs={"class": "form-control s_location"}),
             "s_gender": forms.Select(attrs={"class": "form-control s_gender"}),
             "s_nok": forms.TextInput(attrs={"class": "form-control s_nok"}),
             "s_NIN": forms.TextInput(attrs={"class": "form-control s_NIN"}),
@@ -87,7 +87,7 @@ class SitterForm(forms.ModelForm):
                 attrs={"class": "form-control s_recomender"}
             ),
             "s_religion": forms.TextInput(attrs={"class": "form-control  s_religion"}),
-            "s_educ_level": forms.TextInput(
+            "s_educ_level": forms.Select(
                 attrs={"class": "form-control s_educ_level"}
             ),
             "s_email": forms.EmailInput(attrs={"class": "form-control s_email"}),

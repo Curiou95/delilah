@@ -27,18 +27,22 @@ urlpatterns = [
     
     # SITTER URLS
     path('viewsitter/', views.sitter, name='viewsitter'),
+    path('sitter_archive/', views.view_archive, name='viewsitter_archive'),
+    path('unarchive-sitter/<int:pk>/', views.unarchive_sitter, name='unarchive_sitter'),
     path('addsitter/', views.createsitter, name='addsitter'),
     path('viewsitter/<int:id>', views.readsitter, name='readsitter'),
     path('editsitter/<int:id>', views.updatesitter, name='updatesitter'),
     path('deletesitter/<int:id>', views.deletesitter, name='deletesitter'),
+    path('onduty', views.on_duty, name='onduty'),
+    path('regduty/<int:id>', views.addDuty, name='regduty'),
     
     # sitter scheduling
-    path('add_schedule/', views.schedule_create, name='add_schedule'),
-    path('schedule/', views.schedule_list, name='schedule_list'),
-    path('schedule/<int:schedule_id>/edit/', views.edit_schedule, name='edit_schedule'),
+    # path('add_schedule/', views.schedule_create, name='add_schedule'),
+    # path('schedule/', views.schedule_list, name='schedule_list'),
+    # path('schedule/<int:schedule_id>/edit/', views.edit_schedule, name='edit_schedule'),
     
     # assigning babies
-    path('assignsitter/', views.assignsitter, name='assignsitter'), 
+    path('assignsitter/<int:id>/', views.assignsitter, name='assignsitter'), 
     path('assign_view/', views.assign_view, name='assign_view'), 
     
     

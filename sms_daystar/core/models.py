@@ -15,7 +15,7 @@ def validate_letters(value):
     if not re.match("^([a-zA-Z]+\s)*[a-zA-Z]+$", value):
         raise ValidationError("Only letters are allowed.")
 def validate_numbers(value):
-    if not re.match("^[0-9]*$", value):
+    if not re.match(r'^[0-9]+$', value):
         raise ValidationError("Only numbers are allowed.")
 
 def validate_contacts(value):
@@ -80,20 +80,40 @@ class Sitter(models.Model):
         ("FEMALE", "female"),
     )
     s_no = models.CharField(max_length=45)
-    s_name = models.CharField(max_length=100)
+    s_name = models.CharField(max_length=100,validators=[validate_letters])
     s_dob = models.DateField()
-    s_location = models.CharField(max_length=50)
+    s_location = models.CharField(max_length=50,choices=(
+        ('kabalagala', 'KABALAGALA'),
+    ))
     s_gender = models.CharField(max_length=10, null=True, blank=True, choices=CHOICES)
-    s_nok = models.CharField(max_length=50)  # next of kin
+    s_nok = models.CharField(max_length=50, validators=[validate_letters])  # next of kin
     s_NIN = models.CharField(max_length=20)
-    s_recomender = models.CharField(max_length=150)
+    s_recomender = models.CharField(max_length=150,validators=[validate_letters])
     s_religion = models.CharField(max_length=50, null=True, blank=True)
-    s_educ_level = models.CharField(max_length=100)
+    s_educ_level = models.CharField(max_length=100, choices=(
+        ('masters','MASTERS'),
+        ('bachelors','BACHELORS'),
+        ('certificate','CERTIFICATE'),
+    ))
     s_email = models.EmailField(max_length=150)
-    s_tel = models.IntegerField()
-    # s_available = models.BooleanField(default=True)
+    s_tel = models.CharField(max_length=10 ,validators=[validate_numbers])
+    archived = models.BooleanField(default=False)
+    is_on_duty = models.BooleanField(default=False) 
     def __str__(self):
         return self.s_name
+    class ArchivedManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(archived=True)
+
+    objects = models.Manager()  # Default manager
+    archived_objects = ArchivedManager() # Archived objects manager
+    
+    class SitterManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(is_on_duty=True)  # Filter by is_on_duty
+
+    on_duty_objects = SitterManager()  # Manager for on-duty sitters
+    all_objects = models.Manager()     # Default manager (all sitters)
 
 
 class Attendance(models.Model):
