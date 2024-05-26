@@ -1,6 +1,25 @@
 {% extends "core/base.html" %}
 {% load static %}
 
+
+
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-trophy" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        DOLL STALL
+    </strong>
+    
+</h1>
+{% endblock page-title %}
+
+
+
+
+
+
 {% block buttons %}
 
     <a href=" {% url 'sold_dolls' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
@@ -9,12 +28,7 @@
         </span>
         <span>view sold dolls</span>
     </a>
-    <a href=" {% url 'sitter_txt' %} " class="btn d-inline-flex btn-sm btn-success mx-1">
-        <span class=" pe-2">
-            <i class="bi bi-book"></i>
-        </span>
-        <span>Txt File</span>
-    </a>
+
     
 {% endblock buttons %}
 
@@ -26,7 +40,7 @@
                 {% for item in dolls %}
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="..." class="card-img-top" alt="Placeholder Image">
+                            
                             <div class="card-body">
                                 <h5 class="card-title"> <strong>{{ item.name }}</strong> </h5>
                                 <p class="card-text">{{ item.category.description }}</p>

@@ -1,12 +1,27 @@
 {% extends 'core/base.html' %}
 
 {% block page-title %}
-    <div class="d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>ARCHIVED SITTERS</h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-people" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        ARCHIEVED SITTERS
+    </strong>
+    
+</h1>
 
 {% endblock page-title %}
+
+
+{% block buttons %}
+<a href=" {% url 'viewsitter' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-people"></i>
+    </span>
+    <span >SITTERS</span>
+</a>
+{% endblock %}
 
 
 
@@ -15,15 +30,7 @@
     DayStar | SitterPage
 {% endblock %}
 
-{% block buttons %}
-    <a href=" {% url 'viewsitter' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
-        <span class=" pe-2">
-            <i class="bi bi-plus"></i>
-        </span>
-        <span>view sitters</span>
-    </a>
-    
-{% endblock buttons %}
+
 
 {% block content %}
     <div class="">
@@ -31,13 +38,13 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col">Sitter #</th>
-                <th scope="col">Name</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Location</th>
-                <th scope="col">Recommender</th>
-                <th scope="col">Education level</th>
-                <th scope="col">Actions</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Sitter #</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Name</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Gender</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Location</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Recommender</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Education level</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Actions</th>
                 </tr>
             </thead>
             <tbody>

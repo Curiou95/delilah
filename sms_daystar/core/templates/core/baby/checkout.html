@@ -1,15 +1,27 @@
 {% extends "core/base.html" %}
 
 {% block page-title %}
-    <div class=" d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>   
-            checkout
-        </h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-tencent-qq" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        BABY CHECK Out
+    </strong>
     
+</h1>
 
 {% endblock page-title %}
+
+{% block buttons %}
+<a href=" {% url 'viewbaby' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-tencent-qq"></i>
+    </span>
+    <span >BABIES</span>
+</a>
+{% endblock %}
+
 
 
 
@@ -24,14 +36,13 @@
 {% block content %}
 
     <div class="container mt-5">
-        <h2>Check-out</h2>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="checked_out_by">Checked out by:</label>
                 <input type="text" class="form-control" id="checked_out_by" name="checked_out_by">
             </div>
-            <button type="submit" class="btn btn-primary">Check-out</button>
+            <button type="submit" class="btn btn-primary mt-2">Check-out</button>
         </form>
     </div>
 

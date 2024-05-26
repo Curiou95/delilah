@@ -1,10 +1,15 @@
 {% extends 'core/base.html' %}
 
 {% block page-title %}
-    <div class="d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>SITTERS</h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-people" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        SITTERS
+    </strong>
+    
+</h1>
 
 {% endblock page-title %}
 
@@ -16,17 +21,23 @@
 {% endblock %}
 
 {% block buttons %}
-    <a href=" {% url 'addsitter' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <a href=" {% url 'addsitter' %}" class="btn d-inline-flex btn-sm btn-primary mx-1" style="background-color: #120F75;">
         <span class=" pe-2">
             <i class="bi bi-plus"></i>
         </span>
         <span>add sitter</span>
     </a>
-    <a href=" {% url 'viewsitter_archive' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <a href=" {% url 'viewsitter_archive' %}" class="btn d-inline-flex btn-sm btn-primary mx-1" style="background-color: #120F75;">
         <span class=" pe-2">
             <i class="bi bi-archive"></i>
         </span>
         <span>Archieved sitter</span>
+    </a>
+    <a href=" {% url 'onduty' %}" class="btn d-inline-flex btn-sm btn-primary mx-1" style="background-color: #120F75;">
+        <span class=" pe-2">
+            <i class="bi bi-archive"></i>
+        </span>
+        <span  >On Duty</span>
     </a>
     
     <a href=" {% url 'sitter_txt' %} " class="btn d-inline-flex btn-sm btn-success mx-1">
@@ -39,19 +50,26 @@
 {% endblock buttons %}
 
 {% block content %}
-    <div class="">
+    <div class="mt-4">
+
+        <div class="m-3 bg-light">
+            <form action="#" method="get " class="d-flex">
+                {{ myFilter1.form }}
+                <input type="submit" value="Search" class="btn btn-primary" style="background-color: #120F75;font-size: 15px; ">
+            </form>
+        </div>
         
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col">Sitter #</th>
-                <th scope="col">Name</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Location</th>
-                <th scope="col">Recommender</th>
-                <th scope="col">Education level</th>
-                <th scope="col">On Duty</th>
-                <th scope="col">Actions</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Sitter #</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Name</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Gender</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Location</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Recommender</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Education level</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">On Duty</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,9 +86,6 @@
                     <td>{{ sitters.is_on_duty }}</td>
                     <td>
                     <a href="{% url 'readsitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
-                    <a href="{% url 'updatesitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
-                    <a href="{% url 'deletesitter' sitters.id %}"><button type="button" class="btn btn-danger me-1"><i class="fa-solid fa-trash"></i></button></a>
-                    <a href="{% url 'regduty' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-car"></i></button></a>
                     </td>
                 </tr>
                 {% endfor %}

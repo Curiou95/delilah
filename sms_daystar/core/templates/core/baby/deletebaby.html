@@ -1,16 +1,46 @@
 {% extends "core/base.html" %}
 
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-tencent-qq" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        DELETE BABY
+    </strong>
+    
+</h1>
+
+{% endblock page-title %}
+
+{% block buttons %}
+<a href=" {% url 'viewbaby' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-tencent-qq"></i>
+    </span>
+    <span >BABIES</span>
+</a>
+{% endblock %}
+
 
 {% block content %}
-    <h1>Delete Baby</h1>
 
+<div class="container w-75">
 
-    <p>Are you sure you want to delete this baby "{{ baby }}"</p>
+    <p class="display-4">Are you sure you want to delete this baby <strong>
+        "{{ baby }}"
+    </strong> </p>
 
-    <form action=" {% url 'deletebaby' baby.id %} " method="POST">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-danger" value="Yes" name="confirm ">
-        <a href="{% url 'viewbaby' %}">No</a>
-    </form>
+    <center>
+        <form action=" {% url 'deletebaby' baby.id %} " method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Yes" name="confirm ">
+            <a href="{% url 'viewbaby' %}" class="btn btn-2xl btn-outline-success">No</a>
+        </form>
+    </center>
+    
+</div>
+
+    
 {% endblock content %}
 

@@ -11,19 +11,20 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 
+#letter validation
 def validate_letters(value):
     if not re.match("^([a-zA-Z]+\s)*[a-zA-Z]+$", value):
         raise ValidationError("Only letters are allowed.")
+
+#number validation function
 def validate_numbers(value):
-    if not re.match(r'^[0-9]+$', value):
+    if not re.match("^[0-9]*$", value):
         raise ValidationError("Only numbers are allowed.")
 
-def validate_contacts(value):
+#contact length validation function
+def validate_contact_length(value):
     if len(value) != 10:
         raise ValidationError("Contact field must contain exactly 10 digits.")
-
-
-
 
 class StayPeriod(models.Model):
     PERIOD = (
@@ -57,7 +58,7 @@ class Baby(models.Model):
 
     def __str__(self):
         return self.b_name
-
+#120F75
 class CheckIn(models.Model):
     baby = models.ForeignKey(Baby,related_name='checkins', on_delete=models.CASCADE)
     checkin_time = models.DateTimeField(default=timezone.now)
@@ -117,19 +118,13 @@ class Sitter(models.Model):
 
 
 class Attendance(models.Model):
-    a_sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+    a_sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE, null=True, blank=True)
     a_baby = models.ManyToManyField(Baby)
     a_payment_date = models.DateTimeField()
-    status = models.CharField(max_length=50,null=True,choices=(
-        ('on duty', 'ON DUTY'),
-        ('off duty', 'OFF DUTY'),
-    ))
     
-    class Meta:
-        unique_together = ['a_payment_date', 'a_sitter']
 
     def __str__(self):
-        return f"{self.a_sitter.s_name} assigned to {', '.join(str(b) for b in self.a_baby.all())} on {self.a_payment_date}"
+        return f"Sitter assigned to {', '.join(str(b) for b in self.a_baby.all())} on {self.a_payment_date}"
 
 class Schedule(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
@@ -148,10 +143,10 @@ class Schedule(models.Model):
 
 class Fees(models.Model):
     CHOICES = (
-        ("HALFDAY","10,000" ),
-        ("FULLDAY","15,000" ),
-        ("MONTHLY-HALFDAY","300,000" ),
-        ("MONTHLY-FULLDAY","450,000" ),
+        ("10000","10,000" ),
+        ("15000","15,000" ),
+        ("300000","300,000" ),
+        ("450000","450,000" ),
     )
     f_no = models.CharField(max_length=10, blank=True, null=True)
     f_baby = models.ForeignKey(Baby, on_delete=models.CASCADE)
@@ -221,6 +216,6 @@ class Sale(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.quantity_sold} {self.item.name} sold to {self.sold_to} on {self.sale_date}"
+        return f"{self.quantity_sold} {self.inventory_item.name} sold to {self.sold_to} on {self.sale_date}"
 
 

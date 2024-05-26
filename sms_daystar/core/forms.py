@@ -131,6 +131,14 @@ class FeesForm(forms.ModelForm):
     class Meta:
         model = Fees
         fields = "__all__"
+        widgets = {
+            'f_no': forms.TextInput(attrs={'class':'form-control'}),
+            'f_baby': forms.Select(attrs={'class':'form-control'}),
+            'f_stayperiod': forms.Select(attrs={'class':'form-control'}),
+            'amount': forms.NumberInput(attrs={'class':'form-control'}),
+            'payment_date': forms.DateInput(attrs={'class':'form-control', "type": "date"}),
+            
+        }
 
 
 class AttendanceForm(forms.ModelForm):
@@ -138,7 +146,7 @@ class AttendanceForm(forms.ModelForm):
 
     class Meta:
         model = Attendance
-        fields = ["a_sitter", "status", "a_baby", "a_payment_date"]
+        fields = ["a_sitter", "a_baby", "a_payment_date"]
         widgets = {
             "a_baby": forms.CheckboxSelectMultiple(attrs={"class": "checkbox"}),
             "a_payment_date": forms.DateInput(
@@ -182,6 +190,12 @@ class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
         fields = [ "inventory_item", "quantity_sold", "sold_to", "total_price"]
+        widgets = {
+            'inventory_item': forms.Select(attrs={'class':'form-control'}),
+            'quantity_sold': forms.NumberInput(attrs={'class':'form-control'}),
+            'sold_to': forms.Select(attrs={'class':'form-control'}),
+            'total_price': forms.NumberInput(attrs={'class':'form-control'}),
+        }
 
         def clean(self):
             cleaned_data = super().clean()
@@ -191,3 +205,5 @@ class SaleForm(forms.ModelForm):
                     "Sales can only be made for items in the doll category."
                 )
             return cleaned_data
+        
+        

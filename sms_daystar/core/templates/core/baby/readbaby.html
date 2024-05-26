@@ -1,37 +1,228 @@
 {% extends 'core/base.html' %}
 
-{% block content %}
-    <h1>viewing full baby details</h1>
 
-    {{ baby.b_name }} <br />
-    {{ baby.b_dob }} <br />
-    {{ baby.b_parent }}
-<br><br><br><br>
-    <td>
-        {% comment %} Number of checkins: {{ baby.checkins.count }} {% endcomment %}
-        <a href="{% url 'checkin' baby.id %}" class="btn btn-info">checkin</a>
-        
-    </td>
-    <td>{{ baby.checkins.last.checked_in_by }}</td>
-    <td>
-        {% if baby.checkins.exists %}
-            {% with last_checkout=baby.checkins.last %}
-            {% comment %} Last checkout exists: {{ last_checkout|yesno:"Yes,No" }} {% endcomment %}
-                {% if last_checkout.exists %}
-                    Checked In at {{ last_checkout.checkout_time|time:"H:i" }}
-                {% else %}
-                    <a href="{% url 'checkout' baby.checkins.last.id %}" class="btn btn-danger">checkout</a>
-                {% endif %}
-            {% endwith %}
-        {% else %}
-            Not Checked Out
-        {% endif %}
-    </td>
-    <td>
-        {% if baby.checkins.exists %}
-            {% if baby.checkins.last.exists %}
-                {{ baby.checkins.last.checkouts.last.checked_out_by }}
-            {% endif %}
-        {% endif %}
-    </td>
+
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-tencent-qq" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        BABY DETAILS
+    </strong>
+    
+</h1>
+
+{% endblock page-title %}
+
+{% block buttons %}
+    <a href=" {% url 'viewbaby' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+        <span class=" pe-2">
+            <i class="bi bi-tencent-qq"></i>
+        </span>
+        <span >BABIES</span>
+    </a>
+{% endblock buttons %}
+
+    
+{% block content  %}
+    
+
+
+<br>
+    
+
+<main id="main" class="mt-3">
+    <section class="pb-3 pb-md-4 pb-xl-5 bg-light">
+        <div class="container">
+            <div class="row gy-4 gy-lg-0">
+                <div class="col-12 col-lg-4 col-xl-4">
+                    <div class="row gy-4">
+                        <div class="col-12">
+                            <div
+                                class="card widget-card border-light shadow-sm"
+                            >
+                            
+
+                                <div class="card-body">
+                                    <h5 class="text-center mb-1">
+                                        <h2 style="color: #120F75;">
+                                            <strong>{{ baby.b_name }},</strong>
+                                        </h2>
+                                        <center>
+                                            <span>{{ baby.b_gender }}</span>
+                                        </center>
+                                        
+                                    </h5>
+
+                                    <div class="d-flex justify-content-center gap-4">
+                                            <a href=" {% url 'updatebaby' baby.id %} "
+                                            >
+                                                <button
+                                                    class="btn btn-outline-primary"
+                                                    type="button"
+                                                >
+                                                    <i
+                                                        class="fa fa-pen"
+                                                        aria-hidden="true"
+                                                    ></i
+                                                    >EDIT
+                                                </button>
+                                            </a>
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div
+                                class="card widget-card border-light shadow-sm"
+                            >
+                                <div class="card-header text-bg-primary-outline" style="color: #120F75;">
+                                    About {{ baby.b_name }}
+                                </div>
+                                <div class="card-body">
+                                    <ul
+                                        class="list-group list-group-flush mb-0"
+                                    >
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                {% comment %} <span
+                                                    class="bii bi-mortarboard-fill me-2"
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>Parent Name</strong>
+                                                </h4>
+                                                
+                                            </h6>
+                                            <span> {{ baby.b_parent }} </span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                {% comment %} <span
+                                                    class="bii bi-geo-alt-fill me-2"
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>Date of Birth</strong>
+                                                </h4>
+                                            </h6>
+                                            <span
+                                                > {{ baby.b_dob }} </span
+                                            >
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                {% comment %} <span
+                                                    class="bii bi-building-fill-gear me-2"
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>Location</strong>
+                                                </h4>
+                                            </h6>
+                                            <span> {{ baby.b_location }} </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-12 col-lg-8 col-xl-8">
+                    <div class="card widget-card border-light shadow-sm">
+                        <div class="card-body p-4">
+                            <ul
+                                class="nav nav-tabs"
+                                id="profileTab"
+                                role="tablist"
+                            >
+                                <li class="nav-item" role="presentation">
+                                        Overview
+                                </li>
+                            </ul>
+                            <div
+                                class="tab-content pt-4"
+                                id="profileTabContent"
+                            >
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="overview-tab-pane"
+                                    role="tabpanel"
+                                    aria-labelledby="overview-tab"
+                                    tabindex="0"
+                                >
+                                    
+                                    
+                                    <h5 class="mb-3" style="color: #120F75;">Checkin and Checkout</h5>
+                                    <div class="row g-0">
+                                        <td>
+                                            {% comment %} Number of checkins: {{ baby.checkins.count }} {% endcomment %}
+                                            <a href="{% url 'checkin' baby.id %}" class="btn btn-info">checkin</a>
+                                            
+                                        </td>
+                                        <td>{{ baby.checkins.last.checked_in_by }}</td>
+                                        <td>
+                                            {% if baby.checkins.exists %}
+                                                {% with last_checkout=baby.checkins.last %}
+                                                {% comment %} Last checkout exists: {{ last_checkout|yesno:"Yes,No" }} {% endcomment %}
+                                                    {% if last_checkout.exists %}
+                                                        Checked In at {{ last_checkout.checkout_time|time:"H:i" }}
+                                                    {% else %}
+                                                        <a href="{% url 'checkout' baby.checkins.last.id %}" class="btn btn-danger">checkout</a>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            {% else %}
+                                                Not Checked Out
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if baby.checkins.exists %}
+                                                {% if baby.checkins.last.exists %}
+                                                    {{ baby.checkins.last.checkouts.last.checked_out_by }}
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    
+                                    
+                                        {% comment %} <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Handle</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for babe in baby %}
+                                              <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>{{ babe.b_name }}</td>
+                                                <td>
+                                                    {% for attendance in sitter.attendance_set.all %}
+                                                        {{ attendance.a_payment_date|date }}
+                                                    {% endfor %}
+                                                </td>
+                                                <td>{{ babe.b_stayperiod }}</td>
+                                              </tr>
+                                              {% endfor %}
+                                            </tbody>
+                                          </table> {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}

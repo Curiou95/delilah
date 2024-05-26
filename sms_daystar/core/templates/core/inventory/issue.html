@@ -1,12 +1,29 @@
 {% extends "core/base.html" %}
 
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-shop" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        ISSUE ITEM
+    </strong>
+    
+</h1>
+{% endblock page-title %}
 
+{% block buttons %}
+<a href=" {% url 'inventory' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-shop"></i>
+    </span>
+    <span >Inventory</span>
+</a>
+{% endblock buttons %}
 
 {% block content %}
     <div class="">
 
-
-        <h1>Issue Item</h1>
 
         <form method="post" class="mt-4">
             {% csrf_token %}
@@ -37,7 +54,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Issue</button>
+            <button class="btn btn-primary" type="submit">Issue</button>
         </form> 
         
     </div>

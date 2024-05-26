@@ -1,16 +1,25 @@
 {% extends "core/base.html" %}
 
 {% block page-title %}
-    <div class=" d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>   
-            ADD INVENTORY
-        </h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-shop" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        ADD INVENTORY
+    </strong>
     
-
+</h1>
 {% endblock page-title %}
 
+{% block buttons %}
+<a href=" {% url 'inventory' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-plus"></i>
+    </span>
+    <span >INVENTORY</span>
+</a>
+{% endblock buttons %}
 
 
 
@@ -23,8 +32,6 @@
 
 {% block content %}
 
-<div class="container w-100">
-    <h1>Adding to Inventory</h1>
 
     {% if error_message %}
         <div class="alert alert-danger" role="alert">
@@ -60,7 +67,7 @@
             {{ form.received_date }}
         </div>
         
-        <button type="submit" class="btn btn-primary">ADD</button>
+        <button type="submit" class="btn btn-primary mt-2">ADD</button>
     </form>
 </div>
 

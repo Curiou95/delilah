@@ -52,12 +52,16 @@ urlpatterns = [
     # path('issues/<int:id>', views.issue, name='issue'),
     path('issue/', views.issue_inventory, name='issue'),
     path('items', views.view_issued_items, name='view_items'),
+    path('update_inventory/<int:id>/', views.updateinventory, name='update_inventory'),
     
     # DOLLS
     path('saledoll/<int:id>', views.make_sale, name='saledoll'),
     # path('dolllist/', views.doll_list, name='dolllist'),
     path('viewdoll/', views.dollview, name='dollview'), 
     path('sold-dolls/', views.sold_dolls_view, name='sold_dolls'),
+    path('payreciept/<int:id>/', views.pay_reciept, name='payreciept'),
+    path('payrecieptfee/<int:id>/', views.pay_feesreciept, name='payfeesreciept'),
+    # path('payrecieptsitter/<int:id>/', views.pay_sitterreciept, name='paysitterreciept'),
     
     
     # FINANCE

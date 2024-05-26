@@ -11,6 +11,7 @@ from django.db.models import Sum
 from django.contrib import messages
 from .models import *
 from .forms import *
+from .filters import *
 
 # csvs, text files
 from django.http import HttpResponse
@@ -28,7 +29,7 @@ from django.core.paginator import Paginator
 
 
 def index(request):
-    return render(request, "core/base.html")
+    return render(request, "core/landing-page.html")
 
 
 # =================================================================
@@ -138,6 +139,9 @@ def babies(request):
     checkin = CheckIn.objects.all()
     checkout = CheckOut.objects.all()
 
+    myFilter = BabiesFilter(request.GET, queryset=babies_data)
+    babies_data = myFilter.qs
+
     p = Paginator(Baby.objects.all(), 5)
     page = request.GET.get("page")
     siter = p.get_page(page)
@@ -151,6 +155,7 @@ def babies(request):
         "data": data,
         "nums": nums,
         "siter": siter,
+        "myFilter": myFilter,
     }
     return render(request, "core/baby/viewbabies.html", context)
 
@@ -281,7 +286,10 @@ def checkout(request, checkin_id):
 
 @login_required
 def sitter(request):
-    # sitter = Sitter.objects.all()
+    sitter_data = Sitter.objects.all()
+
+    myFilter1 = SitterFilter(request.GET, queryset=sitter_data)
+    sitter_data = myFilter1.qs
 
     # setup pagination
     p = Paginator(Sitter.objects.filter(archived=False), 5)
@@ -289,7 +297,7 @@ def sitter(request):
     siter = p.get_page(page)
     nums = "a" * siter.paginator.num_pages
 
-    context = {"sitter": sitter, "siter": siter, "nums": nums}
+    context = {"sitter": sitter, "siter": siter, "nums": nums, "myFilter1": myFilter1}
     return render(request, "core/sitter/viewsitter.html", context)
 
 
@@ -423,6 +431,7 @@ def sitter_txt(request):
 # ASSIGNING BABIES TO SITTER
 # =================================================================
 
+
 def addDuty(request, id):
     sitter = get_object_or_404(Sitter, id=id)
     if request.method == "POST":
@@ -452,7 +461,7 @@ def assign_view(request):
 def assignsitter(request, id):
 
     baby = Baby.objects.all()
-    on_duty = Sitter.objects.filter(id=id,is_on_duty=True)
+    on_duty = Sitter.objects.filter(id=id, is_on_duty=True)
 
     if request.method == "POST":
         # If the form is submitted via POST, process the assignment
@@ -470,9 +479,6 @@ def assignsitter(request, id):
         # Render the form to assign teachers to the student
         form = AttendanceForm()
     return render(request, "core/sitter/assign.html", {"form": form, "baby": baby})
-
-
-
 
 
 # def assignsitter(request):
@@ -536,6 +542,23 @@ def inventoryreciept(request):
         "nums": nums,
     }
     return render(request, "core/inventory/inventoryreciept.html", context)
+
+
+@login_required
+def updateinventory(request, id):
+    inventory = Inventory_Items.objects.get(id=id)
+    if request.method == "POST":
+        form = Inventory_ItemsForm(request.POST, instance=inventory)
+        if form.is_valid:
+            form.save()
+            return redirect(reverse("inventory"))
+    else:
+        form = Inventory_ItemsForm(instance=inventory)
+    return render(
+        request,
+        "core/inventory/addinventory.html",
+        {"form": form, "inventory": inventory},
+    )
 
 
 @login_required
@@ -646,6 +669,12 @@ def sold_dolls_view(request):
     return render(request, "core/dolls/sold_dolls.html", {"sold_dolls": sold_dolls})
 
 
+def pay_reciept(request, id):
+    payreciept = Sale.objects.get(id=id)
+    context = {"payreciept": payreciept}
+    return render(request, "core/finance/sitterreciept_fee.html", context)
+
+
 # ==========================================================================
 # END DOLLS
 # ==========================================================================
@@ -658,8 +687,37 @@ def sold_dolls_view(request):
 
 @login_required
 def financeview(request):
+    # school fees payment
     fee = Fees.objects.all()
-    return render(request, "core/finance/financeview.html", {"fee": fee})
+
+    # sitter payment
+    sitterpay = Attendance.objects.all()
+    for attendance in sitterpay:
+        attendance.total_payment = attendance.a_baby.all().count() * 3000
+        attendance.save()
+    total_payout = sitterpay.aggregate(total_amount_paid=Sum(attendance.total_payment))[
+        "total_amount_paid"
+    ]
+
+    # Doll Sales
+    sold_dolls = Sale.objects.filter(inventory_item__category__name="dolls")
+
+    return render(
+        request,
+        "core/finance/financeview.html",
+        {
+            "fee": fee,
+            "total_payout": total_payout,
+            "sitterpay": sitterpay,
+            "sold_dolls": sold_dolls,
+        },
+    )
+
+
+# def pay_sitterreciept(request, id):
+#     payreciept = Attendance.objects.get(id=id)
+#     context = {"payreciept": payreciept}
+#     return render(request, "core/finance/sitterreciept_fee.html", context)
 
 
 @login_required
@@ -672,6 +730,12 @@ def make_payment(request):
     else:
         form = FeesForm()
     return render(request, "core/finance/make_payment.html", {"form": form})
+
+
+def pay_feesreciept(request, id):
+    payreciept = Fees.objects.get(id=id)
+    context = {"payreciept": payreciept}
+    return render(request, "core/finance/reciept_fee.html", context)
 
 
 # ==============================================================================

@@ -3,10 +3,15 @@
 
 
 {% block page-title %}
-    <div class="d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>FINANCE</h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-bank" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        FINANCE
+    </strong>
+    
+</h1>
 
 {% endblock page-title %}
 
@@ -14,11 +19,11 @@
 
 {% block buttons %}
     
-    <a href=" {% url 'make_payment' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <a href=" {% url 'make_payment' %}" class="btn d-inline-flex btn-sm btn-primary mx-1" style="background-color:#120F75;">
         <span class=" pe-2">
-            <i class="bi bi-plus"></i>
+            <i class="bi bi-cash"></i>
         </span>
-        <span>Make Payment</span>
+        <span >Make Payment</span>
     </a>
     
     
@@ -27,19 +32,19 @@
 
 
 {% block content %}
-    
-
+    <div class="mt-4"></div>
+<h2 style="color:#120F75; text-decoration: underline;">FEES PAYMENT</h2>
     <div class="">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Reciept No.</th>
-                    <th scope="col">Baby</th>
-                    <th scope="col">Period</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Action</th>
+                    <th scope="col " style="color:#120F75; font-weight: bolder; font-size: 15px;">#</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Reciept No.</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Baby</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Period</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Amount</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Date</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,11 +57,8 @@
                     <td>${{ fees.amount}} </td>
                     <td>{{ fees.payment_date}} </td>
                     <td>
-                        <a href="" class="btn btn-primary">
-                            <i class="fa fa-paint-brush " aria-hidden="true"></i>
-                        </a>
-                        <a href="" class="btn btn-primary">
-                            <i class="fa fa-trash " aria-hidden="true"></i>
+                        <a href="{% url 'payfeesreciept' fees.id %}" class="btn btn-primary">
+                            Issue Reciept
                         </a>
                     </td>
                 </tr>
@@ -64,5 +66,89 @@
                 </tbody>
             </table>
     </div>
+    <div class="mt-4"></div>
+    <h2 style="color:#120F75; text-decoration: underline;">SITTER PAYOUT</h2>
+    <div class="">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">#</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Sitter</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Baby Numbers</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Amount</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Date</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                {% for fees in sitterpay %}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{ fees.a_sitter.s_name }}</td>
+                    <td>
+                        
+                        {% with baby_count=fees.a_baby.all.count %}
+                            {{ baby_count }} 
+                        {% endwith %}
+                    </td>
+                    <td>shs.{{ fees.total_payment }} </td>
+                    <td>{{ fees.a_payment_date}} </td>
+                    
+                </tr>
+                
+                {% endfor %} 
+                <tr>
+                    <td>
+                        TOTAL AMOUNT DUE:
+                    </td>
+                    <td>
+                        shs.{{total_payout}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+
+    <div class="mt-4"></div>
+
+    <h1 style="color:#120F75; text-decoration: underline;">DOLL SALES</h1>
+    <div class="">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">#</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Reciept No.</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Sitter</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Baby Numbers</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Amount</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Issue reciept</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sale in sold_dolls %}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{ sale.inventory_item.name }}</td>
+                    <td>
+                        {{sale.quantity_sold}}
+                    </td>
+                    <td>{{ sale.sold_to  }}</td>
+                    <td>{{ sale.total_price }} </td>
+                    <td>
+                        <a href="{% url 'payreciept' sale.id %}" class="btn btn-primary">
+                            <i class="fa fa-pen " aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                
+                {% endfor %}
+                </tbody>
+            </table>
+    </div>
+    
+
+
+
+
 
 {% endblock content %}

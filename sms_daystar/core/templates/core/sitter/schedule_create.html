@@ -4,24 +4,33 @@
 
 
 
-{% block addlink %} {% url 'addbaby' %} {% endblock addlink %}
-
-
-
 {% block title %}
     DayStar | BabyPage
 {% endblock title %}
 
 {% block page-title %}
-    <div class=" d-flex align-items-center">
-        <i class="fa-solid fa-baby text-primary" style="font-size: 80px;"></i>
-        <h1>   
-            schedule
-        </h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-tencent-qq" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        BABIES
+    </strong>
     
+</h1>
 
 {% endblock page-title %}
+
+
+{% block buttons %}
+<a href=" {% url 'addbaby' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-plus"></i>
+    </span>
+    <span >Register Baby</span>
+</a>
+{% endblock %}
+
 
 
 {% block content %}

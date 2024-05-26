@@ -1,20 +1,31 @@
 {% extends "core/base.html" %}
 
-{% block page-title %}
-    <div class=" d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>   
-            checkin
-        </h1>
-    </div>
-    
 
-{% endblock page-title %}
 
 
 
 {% comment %} {% block addlink %} {% url '' %} {% endblock addlink %} {% endcomment %}
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-tencent-qq" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        BABY CHECK In
+    </strong>
+    
+</h1>
 
+{% endblock page-title %}
+
+{% block buttons %}
+<a href=" {% url 'viewbaby' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-tencent-qq"></i>
+    </span>
+    <span >BABIES</span>
+</a>
+{% endblock %}
 
 
 {% block title %}
@@ -24,14 +35,13 @@
 {% block content %}
 
     <div class="container mt-5">
-        <h2>Check-in</h2>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="checked_in_by">Who brought the baby?</label>
                 <input type="text" class="form-control" id="checked_in_by" name="checked_in_by">
             </div>
-            <button type="submit" class="btn btn-primary">Check-in</button>
+            <button type="submit" class="btn btn-primary mt-2">Check-in</button>
         </form>
     </div>
 

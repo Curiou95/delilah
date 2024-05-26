@@ -41,46 +41,51 @@
                 </button>
                 <!-- Brand -->
                 
-                <div class="navbar-brand py-lg-3 mb-lg-1 px-lg-6 me-0 text-center">
+                <div class="navbar-brand py-lg-2 mb-lg-1 px-lg-6 me-0 text-center">
                     <img src="{% static 'images/31.png' %}" alt="daystar-logo" class="img-fluid  rounded rounded-circle" style="width: 150px; height: 150px;" > <br>
                     {% comment %} <span class="logo-font">DayStar</span>   <span class="logo-font">DayCare</span> {% endcomment %}
                     
                 </div>
 
                 <!-- Collapse -->
-                <div class="collapse navbar-collapse p-4 " id="sidebarCollapse">
+                <div class="collapse navbar-collapse p-4 pt-1" id="sidebarCollapse">
                     <!-- Navigation -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home' %}">
-                                <i class="bi bi-house"></i> Dashboard
+                                <i class="bi bi-house" style=" color: #FED402;"></i> <span style="color: #120F75;font-size: 15px; "> <strong>Dashboard</strong> </span> 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'viewbaby' %}">
-                                <i class="bi bi-tencent-qq"></i> Babies
+                                <i class="bi bi-tencent-qq" style=" color: #FED402;"></i> 
+                                <span style="color: #120F75;font-size: 15px; "> <strong>Babies</strong> </span> 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'viewsitter' %}">
-                                <i class="bi bi-people"></i> Sitters
-                                <!-- <span
-                                    class="badge bg-opacity-30 bg-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span> -->
+                                <i class="bi bi-people" style=" color: #FED402;"></i> 
+                                <span style="color: #120F75;font-size: 15px; "> <strong>Sitters</strong> </span>
+                            
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'inventory' %}">
-                                <i class="bi bi-shop"></i> Inventory
+                                <i class="bi bi-shop" style=" color: #FED402;"></i> 
+                                <span style="color: #120F75;font-size: 15px; "> <strong>Inventory</strong> </span>
                             </a>
                         </li> 
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'dollview' %}">
-                                <i class="bi bi-bank"></i> Dolls
+                                <i class="bi bi-trophy" style=" color: #FED402;"></i> 
+                                <span style="color: #120F75; "> <strong>Dolls</strong> </span>
                             </a>
+                            {% comment %} <i class="bi bi-trophy" style="font-size: 80px; color: #FED402;"></i> {% endcomment %}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'financeview' %} ">
-                                <i class="bi bi-bank"></i> Finance
+                                <i class="bi bi-bank" style=" color: #FED402;"></i> 
+                                <span style="color: #120F75;font-size: 15px; "> <strong>Finance</strong> </span>
                             </a>
                         </li>
                     </ul> 
@@ -93,10 +98,24 @@
                     <ul class="navbar-nav mb-5">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">
-                                <i class="bi bi-box-arrow-left"></i> Logout
+                                <i class="bi bi-box-arrow-left" style="color: #AB2330;"></i> 
+                                <span style="color: #9B1C31;"> <strong>
+                                    logout
+                                </strong> </span>
                             </a>
                         </li>
                     </ul>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 mx-auto text-center mt-1 fs-6">
+                            <p class="mb-0 text-secondary fs-6 fw-lighter" style="color: #120F75;font-size: 15px; ">
+                                Copyright © <script>
+                                document.write(new Date().getFullYear())
+                                </script> Matende Hussein.
+                            </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -167,7 +186,19 @@
 
         </div>
     </div>
-
+    {% comment %} <footer class="footer py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-8 mx-auto text-center mt-1">
+                <p class="mb-0 text-secondary">
+                    Copyright © <script>
+                    document.write(new Date().getFullYear())
+                    </script> Matende Hussein.
+                </p>
+                </div>
+            </div>
+        </div>
+    </footer> {% endcomment %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/980a2575ac.js" crossorigin="anonymous"></script>
     <script src="{% static 'js/assign.js' %}"></script>

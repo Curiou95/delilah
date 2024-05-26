@@ -1,15 +1,28 @@
 {% extends "core/base.html" %}
 
 {% block page-title %}
-    <div class=" d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>   
-            ADD SITTERS
-        </h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-shop" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        SALE DOLL
+    </strong>
+    
+</h1>
+{% endblock page-title %}
+
+{% block buttons %}
+<a href=" {% url 'dollview' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-plus"></i>
+    </span>
+    <span >View Dolls</span>
+</a>
+{% endblock buttons %}
     
 
-{% endblock page-title %}
+
 
 
 
@@ -23,7 +36,7 @@
 
 {% block content %}
 
-    <div class="container w-75">
+    <div class="container w-75 mt-3">
         <form action="" method="post">
             {% csrf_token %}
             {{ form }}

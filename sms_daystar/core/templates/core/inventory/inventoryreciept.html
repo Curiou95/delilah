@@ -3,10 +3,15 @@
 
 
 {% block page-title %}
-    <div class="d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>INVENTORY</h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-shop" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        INVENTORY
+    </strong>
+    
+</h1>
 
 {% endblock page-title %}
 
@@ -15,19 +20,19 @@
 {% block buttons %}
     
     
-    <a href=" {% url 'addinventory' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <a href=" {% url 'addinventory' %}" class="btn d-inline-flex btn-sm btn-primary mx-1" style="background-color: #120F75;">
         <span class=" pe-2">
             <i class="bi bi-plus"></i>
         </span>
         <span>Add Inventory</span>
     </a>
-    <a href=" {% url 'issue' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <a href=" {% url 'issue' %}" class="btn d-inline-flex btn-sm btn-primary mx-1" style="background-color: #120F75;">
         <span class=" pe-2">
             <i class="bi bi-plus"></i>
         </span>
         <span>Issue Inventory</span>
     </a>
-    <a href=" {% url 'view_items' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <a href=" {% url 'view_items' %}" class="btn d-inline-flex btn-sm btn-primary mx-1" style="background-color: #120F75;">
         <span class=" pe-2">
             <i class="bi bi-plus"></i>
         </span>
@@ -45,17 +50,17 @@
 
 
 
-    <div class="">
+    <div class=" mt-3">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">QTY</th>
-                    <th scope="col">Unit Cost</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">#</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Category</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Item</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">QTY</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Unit Cost</th> 
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Date</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,11 +73,9 @@
                         <td>shs.{{items.unit_cost }} </td>
                         <td>{{items.received_date}}</td>
                         <td>
-                            <a href="" class="btn btn-primary" >
-                                <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                            <a href="{% url 'update_inventory' items.id %}" class="btn btn-primary" >
+                                <i class="fa fa-pen" aria-hidden="true"></i>
                             </a>
-                            <a href="" class="btn btn-danger">
-                                <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                         </td>
                         

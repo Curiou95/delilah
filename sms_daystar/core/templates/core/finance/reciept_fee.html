@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reciept-2</title>
+    <link rel="stylesheet" href="reciept.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+</head>
+<body>
+
+        <div class="card container-fluid w-50 my-3">
+        
+            <div class="card-body">
+                <h5 class="card-title"><span style="color: #120F75;">Day</span><span style="color: #FED402;"> star</span> |Reciept</h5>
+                <!-- top part -->
+                <div class="mt-4">
+                    <h4><span style="color: #120F75;">Day</span><span style="color: #FED402;">star</span>|<span style="color: #120F75;">Daycare</span></h4>
+                    <div class="mt-3">
+                        <p class="mb-1">pobox 12 kampala,</p>
+                        <p>Kabalagala</p>
+                    </div>
+                </div>
+                <!-- middle part -->
+                <div class="d-flex justify-content-between my-4">
+                    <div class="">
+                        <strong style="color: #120F75;">BILL TO</strong>
+                        <p>
+                            {{ payreciept.sold_to.b_name }} <br> 
+                            {{ payreciept.sold_to.b_location }} <br>
+                            kamapala,Ug
+
+                        </p>
+                    </div>
+                    
+                    <div class="" style="width: 200px;">
+                        <div class="d-flex justify-content-between">
+                            <strong style="color: #120F75;">RECIEPT #</strong>
+                            <div class="d-flex justify-content-start " style="width: 80px;">
+                                <span class=""> {{ payreciept.f_no }} </span>
+                            </div>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <strong style="color: #120F75;">RECIEPT DATE</strong>
+                            <div class="d-flex justify-content-start " style="width: 80px;">
+                                <span class="">{{ payreciept.sale_date }}</span>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                <!-- total part -->
+                <div class="my-5">
+                    <div class="divider"></div>
+                    <hr style="color: #120F75; height: 5px;">
+                    <div class="p-1 d-flex justify-content-between">
+                        <strong text-primary style="color: #120F75;">TOTAL</strong>
+                        <span text-primary style="color: #120F75;">Ugx {{ payreciept.total_price }}</span>
+                    </div>
+                    <hr style="color: #120F75;height: 5px;">
+                    <div class="divider"></div>
+                </div>
+                
+                <!-- details part -->
+                <div class="">
+                    <div
+                        class="table-responsive"
+                    >
+                        <table
+                            class="table "
+                        >
+                            <thead>
+                                <tr>
+                                    <th scope="col " style="color: #120F75;">QTY</th>
+                                    <th scope="col" style="color: #120F75;">DESCRIPTION</th>
+                                    <th scope="col" style="color: #120F75;">UNIT PRICE</th>
+                                    <th scope="col" style="color: #120F75;">AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="">
+                                    <td scope="row">1</td>
+                                    <td>{{ payreciept.f_stayperiod.sp_name }}</td>
+                                    <td>{{ payreciept.amount }}</td>
+                                    <td>{{ payreciept.amount }}</td>
+                                    
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+</body>
+</html>

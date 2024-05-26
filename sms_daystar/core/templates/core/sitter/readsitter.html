@@ -1,13 +1,37 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-people" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        {{sitter.s_name}}
+    </strong>
+    
+</h1>
+
+{% endblock page-title %}
+
+{% block buttons %}
+<a href=" {% url 'viewsitter' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-people"></i>
+    </span>
+    <span >SITTERS</span>
+</a>
+{% endblock %}
+
+
+
+
+
 {% block content %}
 
 
 <main id="main" class="mt-3">
-    <!-- Section - Bootstrap Brain Component -->
-
-    <!-- Section - Bootstrap Brain Component -->
     <section class="pb-3 pb-md-4 pb-xl-5 bg-light">
         <div class="container">
             <div class="row gy-4 gy-lg-0">
@@ -21,11 +45,11 @@
 
                                 <div class="card-body">
                                     <div class="text-center mb-3">
-                                        <img
+                                        {% comment %} <img
                                             src="{% static '/images/undraw_profile.svg' %}"
                                             class="img-fluid rounded-circle w-25"
                                             alt="sitter {{ sitter.s_number }}"
-                                        />
+                                        /> {% endcomment %}
                                     </div>
                                     <h5 class="text-center mb-1">
                                         {{ sitter.s_name }}  ,
@@ -45,7 +69,7 @@
                                                 >EDIT
                                             </button>
                                         </a>
-                                        <a href="{% url 'assignsitter'  %}"
+                                        <a href="{% url 'regduty' sitter.id  %}"
                                             ><button
                                                 class="btn btn-primary"
                                                 type="button"
@@ -54,13 +78,22 @@
                                                     class="fa fa-pen"
                                                     aria-hidden="true"
                                                 ></i
-                                                >Assign 
+                                                >REGISTER DUTY 
                                             </button>
                                         </a>
-                                        <a href=""
+                                        <a href="{% url 'deletesitter' sitter.id  %}"
+                                            ><button
+                                                class="btn btn-danger"
+                                                type="button"
                                             >
-                                            <input type="checkbox" name="s_available" id="s_available">
+                                                <i
+                                                    class="fa fa-trash"
+                                                    aria-hidden="true"
+                                                ></i
+                                                >DELETE 
+                                            </button>
                                         </a>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +103,7 @@
                                 class="card widget-card border-light shadow-sm"
                             >
                                 <div class="card-header text-bg-primary-outline">
-                                    About Me
+                                    About {{ sitter.s_name }}
                                 </div>
                                 <div class="card-body">
                                     <ul
@@ -78,32 +111,72 @@
                                     >
                                         <li class="list-group-item">
                                             <h6 class="mb-1">
-                                                <span
+                                                {% comment %} <span
                                                     class="bii bi-mortarboard-fill me-2"
-                                                ></span>
-                                                Education
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>NEXT OF KIN</strong>
+                                                </h4>
+                                                
                                             </h6>
-                                            <span>M.S Computer Science</span>
+                                            <span> {{ sitter.s_nok }} </span>
                                         </li>
                                         <li class="list-group-item">
                                             <h6 class="mb-1">
-                                                <span
+                                                {% comment %} <span
                                                     class="bii bi-geo-alt-fill me-2"
-                                                ></span>
-                                                Location
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>Date of Birth</strong>
+                                                </h4>
                                             </h6>
                                             <span
-                                                >Mountain View, California</span
+                                                > {{ sitter.s_dob }} </span
                                             >
                                         </li>
                                         <li class="list-group-item">
                                             <h6 class="mb-1">
-                                                <span
+                                                {% comment %} <span
                                                     class="bii bi-building-fill-gear me-2"
-                                                ></span>
-                                                Company
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>Location</strong>
+                                                </h4>
                                             </h6>
-                                            <span>GitHub Inc</span>
+                                            <span> {{ sitter.s_location }} </span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                {% comment %} <span
+                                                    class="bii bi-building-fill-gear me-2"
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>RELIGION</strong>
+                                                </h4>
+                                            </h6>
+                                            <span> {{ sitter.s_religion }} </span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                {% comment %} <span
+                                                    class="bii bi-building-fill-gear me-2"
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>EMAIL</strong>
+                                                </h4>
+                                            </h6>
+                                            <span> {{ sitter.s_email }} </span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                {% comment %} <span
+                                                    class="bii bi-building-fill-gear me-2"
+                                                ></span> {% endcomment %}
+                                                <h4 style="color: #120F75;">
+                                                    <strong>TELEPHONE</strong>
+                                                </h4>
+                                            </h6>
+                                            <span> {{ sitter.s_tel }} </span>
                                         </li>
                                     </ul>
                                 </div>
@@ -140,7 +213,6 @@
                                     aria-labelledby="overview-tab"
                                     tabindex="0"
                                 >
-                                    <h5 class="mb-3">About</h5>
                                     {% comment %} <p class="lead mb-3">
                                         Ethan Leo is a seasoned and
                                         results-driven Project Manager who
@@ -153,16 +225,16 @@
                                         efficient and effective project
                                         leadership.
                                     </p> {% endcomment %}
-                                    <h5 class="mb-3">Assigned Babies</h5>
+                                    <h5 class="mb-3" style="color: #120F75;"> <strong>Assigned Babies</strong> </h5>
                                     <div class="row g-0">
                                     
                                         <table class="table">
                                             <thead>
                                               <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Handle</th>
+                                                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">#</th>
+                                                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Name</th>
+                                                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Date</th>
+                                                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Stay</th>
                                               </tr>
                                             </thead>
                                             <tbody>

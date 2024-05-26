@@ -1,14 +1,44 @@
 {% extends "core/base.html" %}
 
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-people" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        DELETE SITTER
+    </strong>
+    
+</h1>
+
+{% endblock page-title %}
+
+{% block buttons %}
+<a href=" {% url 'viewsitter' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-people"></i>
+    </span>
+    <span >SITTERS</span>
+</a>
+{% endblock %}
+
 {% block content %}
-    <h1>Delete Sitter</h1>
+
+<div class="container w-75">
+    <p class="display-4">Are you sure you want to delete  <strong>
+        "{{ sitter }}"
+    </strong> </p>
+
+    <center>
+        <form action=" {% url 'deletesitter' sitter.id %} " method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Archive" name="confirm ">
+            <a class="btn btn-2xl btn-outline-success" href="{% url 'viewsitter' %}">No</a>
+        </form>
+    </center>
+    
+</div>
 
 
-    <p>Are you sure you want to delete  "{{ sitter }}"</p>
-
-    <form action=" {% url 'deletesitter' sitter.id %} " method="POST">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-danger" value="Archive" name="confirm ">
-        <a href="{% url 'viewsitter' %}">No</a>
-    </form>
+    
 {% endblock content %}   

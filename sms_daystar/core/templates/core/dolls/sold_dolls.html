@@ -3,16 +3,75 @@
 
 
 
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-trophy" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        SOLD DOLLS
+    </strong>
+    
+</h1>
+{% endblock page-title %}
 
+{% block buttons %}
+<a href=" {% url 'dollview' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-plus"></i>
+    </span>
+    <span >VIEW DOLLS</span>
+</a>
+{% endblock buttons %}
 
 
 {% block content %}
 <h1>Sold Dolls</h1>
-    <ul>
-        {% for sale in sold_dolls %}
-            <li>{{ sale.inventory_item.name }} - Quantity: {{ sale.quantity_sold }} - Sold To: {{ sale.sold_to }}</li>
-        {% empty %}
-            <li>No sold dolls found</li>
-        {% endfor %}
-    </ul>
+
+
+    <div class="">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Doll Name</th>
+                    <th scope="col">QTY</th>
+                    <th scope="col">Sold To</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Issue Reciept</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sale in sold_dolls %}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{ sale.inventory_item.name }}</td>
+                    <td>
+                        {{sale.quantity_sold}}
+                    </td>
+                    <td>{{ sale.sold_to  }}</td>
+                    <td>{{ sale.total_price }} </td>
+                    <td>
+                        <a href="" class="btn btn-primary">
+                            <i class="fa fa-paint-brush " aria-hidden="true"></i>
+                        </a>
+                        <a href="" class="btn btn-primary">
+                            <i class="fa fa-trash " aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                
+                {% endfor %}
+                <tr>
+                    <td>
+                        TOTAL AMOUNT DUE:
+                    </td>
+                    <td>
+                        shs.{{total_payout}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+
 {% endblock content %}

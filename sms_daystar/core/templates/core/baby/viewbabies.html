@@ -1,16 +1,32 @@
 {% extends 'core/base.html' %}
 
 {% block page-title %}
-    <div class="d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>BABY</h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-tencent-qq" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        BABIES
+    </strong>
+    
+</h1>
 
 {% endblock page-title %}
 
 
-{% block addlink %}
-    {% url 'addbaby' %}
+{% block buttons %}
+<a href=" {% url 'addbaby' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-tencent-qq"></i>
+    </span>
+    <span >Register Baby</span>
+</a>
+<a href=" {% url 'make_payment' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-bank"></i>
+    </span>
+    <span >Make Payment</span>
+</a>
 {% endblock %}
 
 {% block title %}
@@ -18,24 +34,29 @@
 {% endblock %}
 
 {% block content %}
-    <div class="">
+    <div class="mt-4">
         
+        <div class="m-3 bg-light">
+            <form action="#" method="get " class="d-flex">
+                {{ myFilter.form }}
+                <input type="submit" value="Search" class="btn btn-primary" style="background-color: #120F75;font-size: 15px; ">
+            </form>
+        </div>
+
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col"> #</th>
-                <th scope="col">Baby #</th>
-                <th scope="col">Name</th>
-                <th scope="col">DOB</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Location</th>
-                <th scope="col">Parent</th>
-                <th scope="col">Stay Period</th>
-                <th scope="col">Checkin</th>
-                <th scope="col">Checkin by</th>
-                <th scope="col">Checkout</th>
-                <th scope="col">Checkout by</th>
-                <th scope="col">Actions</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;"> #</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Baby #</th>
+                <th scope="col"style="color:#120F75; font-weight: bolder; font-size: 15px;">Name</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Gender</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Location</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Stay</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Checkin</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Checkin by</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Checkout</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Checkout by</th>
+                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,54 +67,15 @@
                                 <th scope="row">
                                 <strong>{{ forloop.counter }}</strong>
                                 </th>
-                                <td>{{ babies.b_no }}</td>
+                                <td>B{{ babies.b_no }}</td>
                                 <td>{{ babies.b_name }}</td>
-                                <td>{{ babies.b_dob }}</td>
                                 <td>{{ babies.b_gender }}</td>
                                 <td>{{ babies.b_location }}</td>
-                                <td>{{ babies.b_parent }}</td>
                                 <td>{{ babies.b_stayperiod }}</td>
-                                <td>{{checkin.checkin_time}}</td>
+                                <td>{{checkin.checkin_time|time:"H:i A"}}</td>
                                 <td>{{checkin.checked_in_by}}</td>
-                                <td>{{checkout.checkout_time}}</td>
+                                <td>{{checkout.checkout_time|time:"H:i A"}}</td>
                                 <td>{{checkout.checked_out_by}}</td>
-
-                                {% comment %} <td>
-                                    {% if babies.checkins.exists %}
-                                        Checked In at {{ babies.checkins.last.checkin_time|time:"H:i" }}
-                                    {% else %}
-                                        Not Checked In
-                                    {% endif %}
-                                </td>
-                                <td>{{ babies.checkins.last.checked_in_by }}</td> {% endcomment %}
-                                
-                                {% comment %} <td>
-                                    {% if babies.checkins.exists %}
-                                        {% if babies.checkins.last.checkouts.exists %}
-                                            Checked Out at {{ babies.checkins.last.checkout.checkout_time|time:"H:i" }}
-                                        {% else %}
-                                        <a href="{% url 'checkout' babies.checkins.last.id %} " class="btn btn-danger">checkout</a>
-                                        {% endif %}
-                                    {% else %}
-                                        Not Checked Out
-                                    {% endif %}
-                                </td>
-                                <td>{{ babies.checkins.last.checkouts.last.checked_out_by }}</td> {% endcomment %}
-
-
-                                {% comment %} <td>
-                                    {% if babies.checkins.exists %}
-                                            Checked Out at {{ last_checkout.checkout_time|time:"H:i" }}
-                                            
-                                    {% else %}
-                                        Not Checked Out
-                                    {% endif %}
-                                </td>
-                                <td>
-                                            {{ babies.checkins.last.checkouts.last.checked_out_by }}
-                                        
-                                </td> {% endcomment %}
-
                                 
                                 <td>
                                     <a href="{% url 'readbaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
