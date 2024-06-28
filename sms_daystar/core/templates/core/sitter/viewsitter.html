@@ -52,12 +52,12 @@
 {% block content %}
     <div class="mt-4">
 
-        <div class="m-3 bg-light">
+        {% comment %} <div class="m-3 bg-light">
             <form action="#" method="get " class="d-flex">
                 {{ myFilter1.form }}
                 <input type="submit" value="Search" class="btn btn-primary" style="background-color: #120F75;font-size: 15px; ">
             </form>
-        </div>
+        </div> {% endcomment %}
         
         <table class="table table-striped">
             <thead>
@@ -65,12 +65,9 @@
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Sitter #</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Name</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Gender</th>
-                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Location</th>
-                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Recommender</th>
-                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Education level</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">On Duty</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Actions</th>
-                </tr>
+                </tr> 
             </thead>
             <tbody>
                 {% for sitters in siter %}
@@ -80,9 +77,6 @@
                     </th>
                     <td>{{ sitters.s_name }}</td>
                     <td>{{ sitters.s_gender }}</td>
-                    <td>{{ sitters.s_location }}</td>
-                    <td>{{ sitters.s_recomender }}</td>
-                    <td>{{ sitters.s_educ_level }}</td>
                     <td>{{ sitters.is_on_duty }}</td>
                     <td>
                     <a href="{% url 'readsitter' sitters.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>

@@ -26,8 +26,8 @@
                     <div class="">
                         <strong style="color: #120F75;">BILL TO</strong>
                         <p>
-                            {{ payreciept.a_sitter.s_name }} <br> 
-                            {{ payreciept.a_sitter.s_location }} <br>
+                            <strong>{{ payreciept.sold_to.b_name }}</strong> <br> 
+                            <strong>{{ payreciept.sold_to.b_location }}</strong> <br> 
                             kamapala,Ug
 
                         </p>
@@ -44,7 +44,7 @@
                         <div class="d-flex justify-content-between">
                             <strong style="color: #120F75;">RECIEPT DATE</strong>
                             <div class="d-flex justify-content-start " style="width: 80px;">
-                                <span class="">{{ payreciept.a_payment_date|date:"F j" }}</span>
+                                <span class="">{{ payreciept.sale_date|date:"F j, Y" }}</span>
                             </div>
                         </div>
                         
@@ -57,7 +57,7 @@
                     <hr style="color: #120F75; height: 5px;">
                     <div class="p-1 d-flex justify-content-between">
                         <strong text-primary style="color: #120F75;">TOTAL</strong>
-                        <span text-primary style="color: #120F75;">Ugx {{ payreciept.amount }}</span>
+                        <span text-primary style="color: #120F75;">Ugx {{ payreciept.total_price }}</span>
                     </div>
                     <hr style="color: #120F75;height: 5px;">
                     <div class="divider"></div>
@@ -81,10 +81,10 @@
                             </thead>
                             <tbody>
                                 <tr class="">
-                                    <td scope="row">1</td>
-                                    <td>{{ payreciept.a_baby.count }} Baby(s)</td>
+                                    <td scope="row">{{ payreciept.quantity_sold }}</td>
+                                    <td><strong>{{ payreciept.inventory_item.name }}</strong>  Doll(s) </td>
                                     <td></td>
-                                    <td>{{ payreciept.amount }}</td>
+                                    <td>{{ payreciept.total_price }}</td>
                                     
                                 </tr>
                                 

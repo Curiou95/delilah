@@ -43,30 +43,20 @@
                             >
                             
 
-                                <div class="card-body">
-                                    <div class="text-center mb-3">
-                                        {% comment %} <img
-                                            src="{% static '/images/undraw_profile.svg' %}"
-                                            class="img-fluid rounded-circle w-25"
-                                            alt="sitter {{ sitter.s_number }}"
-                                        /> {% endcomment %}
-                                    </div>
+                                <div class="card-body p-3">
+                                
                                     <h5 class="text-center mb-1">
                                         {{ sitter.s_name }}  ,
                                         <span>{{ sitter.s_gender }}</span>
                                     </h5>
 
-                                    <div class="d-flex gap-4">
+                                    <div class="d-flex gap-2 mt-3">
                                         <a href="{% url 'updatesitter' sitter.id %}"
                                             ><button
                                                 class="btn btn-outline-primary"
                                                 type="button"
                                             >
-                                                <i
-                                                    class="fa fa-pen"
-                                                    aria-hidden="true"
-                                                ></i
-                                                >EDIT
+                                                UPDATE
                                             </button>
                                         </a>
                                         <a href="{% url 'regduty' sitter.id  %}"
@@ -74,11 +64,7 @@
                                                 class="btn btn-primary"
                                                 type="button"
                                             >
-                                                <i
-                                                    class="fa fa-pen"
-                                                    aria-hidden="true"
-                                                ></i
-                                                >REGISTER DUTY 
+                                                REGISTER DUTY 
                                             </button>
                                         </a>
                                         <a href="{% url 'deletesitter' sitter.id  %}"
@@ -86,11 +72,7 @@
                                                 class="btn btn-danger"
                                                 type="button"
                                             >
-                                                <i
-                                                    class="fa fa-trash"
-                                                    aria-hidden="true"
-                                                ></i
-                                                >DELETE 
+                                                ARCHIVE 
                                             </button>
                                         </a>
                                         
@@ -103,7 +85,9 @@
                                 class="card widget-card border-light shadow-sm"
                             >
                                 <div class="card-header text-bg-primary-outline">
-                                    About {{ sitter.s_name }}
+                                    About <strong>
+                                        {{ sitter.s_name }}
+                                    </strong> 
                                 </div>
                                 <div class="card-body">
                                     <ul
@@ -144,6 +128,22 @@
                                                 </h4>
                                             </h6>
                                             <span> {{ sitter.s_location }} </span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                <h4 style="color: #120F75;">
+                                                    <strong>Education Level</strong>
+                                                </h4>
+                                            </h6>
+                                            <span> {{ sitter.s_educ_level }} </span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h6 class="mb-1">
+                                                <h4 style="color: #120F75;">
+                                                    <strong>Recommender</strong>
+                                                </h4>
+                                            </h6>
+                                            <span> {{ sitter.s_recomender }} </span>
                                         </li>
                                         <li class="list-group-item">
                                             <h6 class="mb-1">

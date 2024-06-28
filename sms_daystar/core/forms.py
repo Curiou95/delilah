@@ -12,18 +12,28 @@ class BabyForm(forms.ModelForm):
     class Meta:
         model = Baby
         fields = "__all__"
+        except_fields = 'is_subscribed_monthly'
         widgets = {
-            'b_no': forms.TextInput( attrs={'class':'form-control'}),
-            'b_name': forms.TextInput(attrs={'class':'form-control'}),
-            "b_dob": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
-            ),
-            'b_gender': forms.Select(attrs={'class':'form-control'}),
-            'b_location': forms.TextInput(attrs={'class':'form-control'}),
-            'b_parent': forms.TextInput(attrs={'class':'form-control'}),
-            'b_stayperiod': forms.Select(attrs={'class':'form-control'}),
+            "b_no": forms.TextInput(attrs={"class": "form-control"}),
+            "b_name": forms.TextInput(attrs={"class": "form-control"}),
+            "b_dob": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
+            "b_gender": forms.Select(attrs={"class": "form-control"}),
+            "b_location": forms.TextInput(attrs={"class": "form-control"}),
+            "b_parent": forms.TextInput(attrs={"class": "form-control"}),
+            "b_stayperiod": forms.Select(attrs={"class": "form-control"}),
+        }
+        labels = {
+            "b_no": "Baby No.",
+            "b_name": "Baby Name",
+            "b_dob": "Date of Birth",
+            "b_gender": "Gender",
+            "b_location": "Location",
+            "b_parent": "Parent/Guardian",
+            "b_stayperiod": "Stay Period",
         }
 
+class BabySearchForm(forms.Form):
+    b_name = forms.CharField(label='Search by Baby Name', max_length=100)
 
 class CheckInForm(forms.Form):
     checked_in_by = forms.CharField(max_length=100, label="Who brought the baby?")
@@ -87,11 +97,24 @@ class SitterForm(forms.ModelForm):
                 attrs={"class": "form-control s_recomender"}
             ),
             "s_religion": forms.TextInput(attrs={"class": "form-control  s_religion"}),
-            "s_educ_level": forms.Select(
-                attrs={"class": "form-control s_educ_level"}
-            ),
+            "s_educ_level": forms.Select(attrs={"class": "form-control s_educ_level"}),
             "s_email": forms.EmailInput(attrs={"class": "form-control s_email"}),
             "s_tel": forms.NumberInput(attrs={"class": "form-control s_tel"}),
+        }
+        
+        labels = {
+            "s_no": 'Sitter Number',
+            "s_name": 'Sitter Name',
+            "s_dob": 'Sitter Dob',
+            "s_location": 'Sitter Location',
+            "s_gender": ' Gender',
+            "s_nok": 'Next of kin',
+            "s_NIN": 'NIN',
+            "s_recomender": 'Recomender',
+            "s_religion": 'Religion',
+            "s_educ_level": 'Education Level',
+            "s_email": 'Email Address',
+            "s_tel": 'Telephone',
         }
 
         fieldsets = (
@@ -132,12 +155,20 @@ class FeesForm(forms.ModelForm):
         model = Fees
         fields = "__all__"
         widgets = {
-            'f_no': forms.TextInput(attrs={'class':'form-control'}),
-            'f_baby': forms.Select(attrs={'class':'form-control'}),
-            'f_stayperiod': forms.Select(attrs={'class':'form-control'}),
-            'amount': forms.NumberInput(attrs={'class':'form-control'}),
-            'payment_date': forms.DateInput(attrs={'class':'form-control', "type": "date"}),
-            
+            "f_no": forms.TextInput(attrs={"class": "form-control"}),
+            "f_baby": forms.Select(attrs={"class": "form-control"}),
+            "f_stayperiod": forms.Select(attrs={"class": "form-control"}),
+            "amount": forms.NumberInput(attrs={"class": "form-control"}),
+            "payment_date": forms.DateInput(
+                attrs={"class": "form-control", "type": "date"}
+            ),
+        }
+        labels = {
+            "f_no": "Reciept Number",
+            "f_baby": "Baby Name",
+            "f_stayperiod": "Stay Period ID",
+            "amount": "Amount",
+            "payment_date": "Payment Date",
         }
 
 
@@ -148,10 +179,16 @@ class AttendanceForm(forms.ModelForm):
         model = Attendance
         fields = ["a_sitter", "a_baby", "a_payment_date"]
         widgets = {
-            "a_baby": forms.CheckboxSelectMultiple(attrs={"class": "checkbox"}),
+            "a_baby": forms.CheckboxSelectMultiple(attrs={"class": ""}),
+            "a_sitter": forms.Select(attrs={"class": "form-control form-select"}),
             "a_payment_date": forms.DateInput(
                 attrs={"class": "form-control ", "type": "date"}
             ),
+        }
+        labels = {
+            'a_baby': 'Babies',
+            'a_sitter': 'Sitters',
+            'a_payment_date': 'Date',
         }
 
 
@@ -159,7 +196,6 @@ class InventorySupplyForm(forms.ModelForm):
     class Meta:
         model = InventoryCategory
         fields = "__all__"
-    
 
 
 class Inventory_ItemsForm(forms.ModelForm):
@@ -167,11 +203,13 @@ class Inventory_ItemsForm(forms.ModelForm):
         model = Inventory_Items
         fields = "__all__"
         widgets = {
-            'category': forms.Select(attrs={'class':'form-control'}),
-            'name': forms.TextInput(attrs={'class':'form-control'}),
-            'quantity': forms.NumberInput(attrs={'class':'form-control'}),
-            'unit_cost': forms.NumberInput(attrs={'class':'form-control'}),
-            'received_date': forms.DateInput(attrs={'class':'form-control', "type": "date"}),
+            "category": forms.Select(attrs={"class": "form-control"}),
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "quantity": forms.NumberInput(attrs={"class": "form-control"}),
+            "unit_cost": forms.NumberInput(attrs={"class": "form-control"}),
+            "received_date": forms.DateInput(
+                attrs={"class": "form-control", "type": "date"}
+            ),
         }
 
 
@@ -180,21 +218,21 @@ class Issue_InventoryForm(forms.ModelForm):
         model = Issue_Inventory
         fields = "__all__"
         widgets = {
-            'item': forms.Select(attrs={'class':'form-control'}),
-            'issued_To': forms.Select(attrs={'class':'form-control'}),
-            'quantity_issued': forms.NumberInput(attrs={'class':'form-control'}),
+            "item": forms.Select(attrs={"class": "form-control"}),
+            "issued_To": forms.Select(attrs={"class": "form-control"}),
+            "quantity_issued": forms.NumberInput(attrs={"class": "form-control"}),
         }
 
 
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        fields = [ "inventory_item", "quantity_sold", "sold_to", "total_price"]
+        fields = ["inventory_item", "quantity_sold", "sold_to", "total_price"]
         widgets = {
-            'inventory_item': forms.Select(attrs={'class':'form-control'}),
-            'quantity_sold': forms.NumberInput(attrs={'class':'form-control'}),
-            'sold_to': forms.Select(attrs={'class':'form-control'}),
-            'total_price': forms.NumberInput(attrs={'class':'form-control'}),
+            "inventory_item": forms.Select(attrs={"class": "form-control"}),
+            "quantity_sold": forms.NumberInput(attrs={"class": "form-control"}),
+            "sold_to": forms.Select(attrs={"class": "form-control"}),
+            "total_price": forms.NumberInput(attrs={"class": "form-control"}),
         }
 
         def clean(self):
@@ -205,5 +243,3 @@ class SaleForm(forms.ModelForm):
                     "Sales can only be made for items in the doll category."
                 )
             return cleaned_data
-        
-        

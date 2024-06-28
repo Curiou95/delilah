@@ -7,7 +7,7 @@
         <i class="bi bi-bank" style="font-size: 80px; color: #FED402;"></i>
     </i>
     <strong>
-        BABIES
+        FEES PAYMENT
     </strong>
     
 </h1>
@@ -28,8 +28,7 @@
 
 
 {% block content %}
-    <div class="">
-        <h2>Make Payment</h2>
+    <div class="m-auto mt-3 w-75">
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

@@ -33,21 +33,20 @@
             <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">#</th>
             <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Number</th>
             <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Name</th>
-            <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Action</th>
+            <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Action</th> 
         </tr>
         </thead>
         <tbody>
         <tr>
             {% for sitter in on_duty_sitters %}
-            
-            
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ sitter.s_no }}</td>
-            <td>{{ sitter.s_name }} </td>
-            <td>
-                <a href="{% url 'assignsitter' sitter.id %}" class="btn btn-animated">Assign</a>
-                
-            </td>
+                <tr>
+                    <td scope="row">{{ forloop.counter }}</td>
+                    <td>{{ sitter.s_no }}</td>
+                    <td>{{ sitter.s_name }} </td>
+                    <td>
+                        <a href="{% url 'assignsitter' sitter.id %}" class="btn btn-animated">Assign</a>
+                    </td>
+                </tr>
             {% endfor %}
         </tr>
         </tbody>

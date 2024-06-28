@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.db import transaction
 from django.db.models import Sum
 from django.contrib import messages
+from django.db.models import Count
 from .models import *
 from .forms import *
 from .filters import *
@@ -97,7 +98,9 @@ def logout(request):
 # =================================================================
 
 
+@login_required
 def home(request):
+    inventory = Inventory_Items.objects.all()
     no_of_babies = Baby.objects.all().count()
     no_of_sitters = Sitter.objects.all().count()
     daily_babies = Baby.objects.filter(
@@ -115,6 +118,31 @@ def home(request):
     )
     dolls_sold = Sale.objects.filter(inventory_item__category__name="dolls").count()
 
+    # Fetch data for baby attendance by date
+    attendance_data = CheckIn.objects.values("checkin_time__date").annotate(
+        total_checkins=Count("id")
+    )
+
+    # Prepare data for chart
+    dates = [
+        entry["checkin_time__date"].strftime("%Y-%m-%d") for entry in attendance_data
+    ]
+    checkin_counts = [entry["total_checkins"] for entry in attendance_data]
+    
+    
+    remaining_inventory = {}
+    
+    # Calculate remaining inventory for each item
+    for item in inventory:
+        # Get total quantity issued for the item
+        total_quantity_issued = Issue_Inventory.objects.filter(item=item).aggregate(total_issued=models.Sum('quantity_issued'))['total_issued'] or 0
+        
+        # Calculate remaining inventory
+        remaining_quantity = item.quantity - total_quantity_issued
+        
+        # Store in dictionary
+        remaining_inventory[item] = remaining_quantity
+
     context = {
         "no_of_babies": no_of_babies,
         "no_of_sitters": no_of_sitters,
@@ -123,6 +151,9 @@ def home(request):
         "total_payments_sum": total_payments_sum,
         "fees_per_day": fees_per_day,
         "dolls_sold": dolls_sold,
+        "dates": dates,
+        "checkin_counts": checkin_counts,
+        'remaining_inventory': remaining_inventory,
     }
     return render(request, "core/dash.html", context)
 
@@ -132,17 +163,25 @@ def home(request):
 # =================================================================
 
 
+@login_required
 def babies(request):
     # babies_data = Baby.objects.annotate(
 
     babies_data = Baby.objects.all()
     checkin = CheckIn.objects.all()
     checkout = CheckOut.objects.all()
+    
+    search_form = BabySearchForm()
+    if 'b_name' in request.GET:
+        search_form = BabySearchForm(request.GET)
+        if search_form.is_valid():
+            b_name = search_form.cleaned_data['b_name']
+            babies_data = babies_data.filter(b_name__icontains=b_name)
 
-    myFilter = BabiesFilter(request.GET, queryset=babies_data)
-    babies_data = myFilter.qs
+    # myFilter = BabiesFilter(request.GET, queryset=babies_data)
+    # babies_data = myFilter.qs
 
-    p = Paginator(Baby.objects.all(), 5)
+    p = Paginator(babies_data, 5)
     page = request.GET.get("page")
     siter = p.get_page(page)
     nums = "a" * siter.paginator.num_pages
@@ -155,16 +194,18 @@ def babies(request):
         "data": data,
         "nums": nums,
         "siter": siter,
-        "myFilter": myFilter,
+        "search_form": search_form,
     }
     return render(request, "core/baby/viewbabies.html", context)
 
 
+@login_required
 def readbaby(request, id):
     baby = Baby.objects.get(id=id)
     return render(request, "core/baby/readbaby.html", {"baby": baby})
 
 
+@login_required
 def createbaby(request):
     if request.method == "POST":
         form = BabyForm(request.POST)
@@ -182,6 +223,7 @@ def createbaby(request):
     return render(request, "core/baby/createbaby.html", context)
 
 
+@login_required
 def updatebaby(request, id):
     baby = Baby.objects.get(id=id)
     if request.method == "POST":
@@ -194,6 +236,7 @@ def updatebaby(request, id):
     return render(request, "core/baby/createbaby.html", {"form": form, "baby": baby})
 
 
+@login_required
 def deletebaby(request, id):
     baby = Baby.objects.get(id=id)
     if request.method == "POST":
@@ -202,6 +245,7 @@ def deletebaby(request, id):
     return render(request, "core/baby/deletebaby.html", {"baby": baby})
 
 
+@login_required
 def deletesitter(request, id):
     sitter = get_object_or_404(Sitter, id=id)
     if request.method == "POST":
@@ -230,6 +274,7 @@ def deletesitter(request, id):
 #     return render(request, "core/sitter/sitter_archive.html", context)
 
 
+@login_required
 def checkin(request, baby_id):
     baby = Baby.objects.get(id=baby_id)
     if request.method == "POST":
@@ -246,6 +291,7 @@ def checkin(request, baby_id):
     return render(request, "core/baby/checkin.html", {"form": form, "baby": baby})
 
 
+@login_required
 def checkout(request, checkin_id):
     checkin = CheckIn.objects.get(id=checkin_id)
     baby = checkin.baby

@@ -1,14 +1,41 @@
 {% extends "core/base.html" %}
 
+{% block page-title %}
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-people" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        Register Onduty
+    </strong>
+    
+</h1>
+
+{% endblock page-title %}
+
+
+{% block buttons %}
+<a href=" {% url 'viewsitter' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-people"></i>
+    </span>
+    <span >Sitters</span>
+</a>
+{% endblock %}
+
+{% block title %}
+    DayStar | Dutypage
+{% endblock %}
+
 {% block content %}
-    <h1>Register Onduty</h1>
 
+    <div class="d-flex flex-column align-items-center mt-5 justify-content-center">
+        <p class="">Are you sure you want to Add "{{ sitter }}"</p>
 
-    <p>Are you sure you want to Add "{{ sitter }}"</p>
-
-    <form action=" {% url 'regduty' sitter.id %} " method="POST">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-danger" value="ADD" name="confirm ">
-        <a href="{% url 'viewsitter' %}">No</a>
-    </form>
+        <form action=" {% url 'regduty' sitter.id %} " method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="ADD" name="confirm ">
+            <a href="{% url 'viewsitter' %}" style="text-decoration: none;">No</a>
+        </form>
+    </div>
 {% endblock content %}   

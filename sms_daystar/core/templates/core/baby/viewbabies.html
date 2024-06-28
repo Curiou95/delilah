@@ -37,21 +37,26 @@
     <div class="mt-4">
         
         <div class="m-3 bg-light">
-            <form action="#" method="get " class="d-flex">
-                {{ myFilter.form }}
+            {% comment %} <form action="#" method="get " class="d-flex">
+                {{ search_form }}
                 <input type="submit" value="Search" class="btn btn-primary" style="background-color: #120F75;font-size: 15px; ">
-            </form>
+            </form> {% endcomment %}
+            {% comment %} <h2>Search Results</h2>
+            <ul>
+                {% for baby in babies %}
+            <li><a href="{% url 'readbaby' id=baby.id %}">{{ baby.b_name }}</a></li>
+        {% empty %}
+            <li>No babies found.</li>
+        {% endfor %}
+            </ul> {% endcomment %}
         </div>
 
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;"> #</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Baby #</th>
                 <th scope="col"style="color:#120F75; font-weight: bolder; font-size: 15px;">Name</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Gender</th>
-                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Location</th>
-                <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Stay</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Checkin</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Checkin by</th>
                 <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Checkout</th>
@@ -64,23 +69,19 @@
                 
                     
                             <tr>
-                                <th scope="row">
+                                {% comment %} <th scope="row">
                                 <strong>{{ forloop.counter }}</strong>
-                                </th>
-                                <td>B{{ babies.b_no }}</td>
+                                </th> {% endcomment %}
+                                <td>{{ babies.b_no }}</td>
                                 <td>{{ babies.b_name }}</td>
                                 <td>{{ babies.b_gender }}</td>
-                                <td>{{ babies.b_location }}</td>
-                                <td>{{ babies.b_stayperiod }}</td>
                                 <td>{{checkin.checkin_time|time:"H:i A"}}</td>
-                                <td>{{checkin.checked_in_by}}</td>
+                                <td> <strong>{{checkin.checked_in_by}}</strong> </td>
                                 <td>{{checkout.checkout_time|time:"H:i A"}}</td>
-                                <td>{{checkout.checked_out_by}}</td>
+                                <td> <strong>{{checkout.checked_out_by}}</strong></td>
                                 
                                 <td>
                                     <a href="{% url 'readbaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-eye"></i></button></a>
-                                    <a href="{% url 'updatebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-pen"></i></button></a>
-                                    <a href="{% url 'deletebaby' babies.id %}"><button type="button" class="btn btn-success-outline me-1"><i class="fa-solid fa-trash"></i></button></a>
                                 </td>
                                 
                             </tr>

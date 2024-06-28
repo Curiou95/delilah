@@ -33,7 +33,7 @@
 
 {% block content %}
     <div class="mt-4"></div>
-<h2 style="color:#120F75; text-decoration: underline;">FEES PAYMENT</h2>
+<h2 style="color:#120F75; font-size: 21px; "><strong>FEES</strong></h2>
     <div class="">
         <table class="table">
             <thead>
@@ -44,21 +44,21 @@
                     <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Period</th>
                     <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Amount</th>
                     <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Date</th>
-                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Action</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Reciept</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for fees in fee %}
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ fees.f_no }}</td>
                     <td>{{ fees.f_baby }}</td>
                     <td>{{ fees.f_stayperiod}} </td>
-                    <td>${{ fees.amount}} </td>
+                    <td>shs.{{ fees.amount}} </td>
                     <td>{{ fees.payment_date}} </td>
                     <td>
-                        <a href="{% url 'payfeesreciept' fees.id %}" class="btn btn-primary">
-                            Issue Reciept
+                        <a href="{% url 'payfeesreciept' fees.id %}" style="background-color: #120F75;" class="btn btn-primary">
+                            <i class="fa-solid fa-receipt"></i>
                         </a>
                     </td>
                 </tr>
@@ -67,7 +67,7 @@
             </table>
     </div>
     <div class="mt-4"></div>
-    <h2 style="color:#120F75; text-decoration: underline;">SITTER PAYOUT</h2>
+    <h2 style="color:#120F75; font-size: 21px; "><strong>SITTER PAYOUT</strong></h2>
     <div class="">
         <table class="table">
             <thead>
@@ -83,7 +83,7 @@
                 <tbody>
                 {% for fees in sitterpay %}
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ fees.a_sitter.s_name }}</td>
                     <td>
                         
@@ -97,29 +97,30 @@
                 </tr>
                 
                 {% endfor %} 
-                <tr>
-                    <td>
-                        TOTAL AMOUNT DUE:
-                    </td>
-                    <td>
-                        shs.{{total_payout}}
-                    </td>
-                </tr>
+                
                 </tbody>
             </table>
+            <tr>
+                <td>
+                    TOTAL AMOUNT DUE:
+                </td>
+                <td>
+                    shs.{{total_payout}}
+                </td>
+            </tr>
     </div>
 
     <div class="mt-4"></div>
 
-    <h1 style="color:#120F75; text-decoration: underline;">DOLL SALES</h1>
+    <h2 style="color:#120F75; font-size: 21px; "><strong>DOLL SALES</strong></h2>
     <div class="">
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">#</th>
-                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Reciept No.</th>
-                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Sitter</th>
-                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Baby Numbers</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Doll Name</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Qty</th>
+                    <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Buyer</th>
                     <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Amount</th>
                     <th scope="col" style="color:#120F75; font-weight: bolder; font-size: 15px;">Issue reciept</th>
                 </tr>
@@ -127,7 +128,7 @@
                 <tbody>
                 {% for sale in sold_dolls %}
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ sale.inventory_item.name }}</td>
                     <td>
                         {{sale.quantity_sold}}
@@ -135,8 +136,8 @@
                     <td>{{ sale.sold_to  }}</td>
                     <td>{{ sale.total_price }} </td>
                     <td>
-                        <a href="{% url 'payreciept' sale.id %}" class="btn btn-primary">
-                            <i class="fa fa-pen " aria-hidden="true"></i>
+                        <a href="{% url 'payreciept' sale.id %}"style="background-color: #120F75;" class="btn btn-primary">
+                            <i  class="fa-solid fa-receipt"></i>
                         </a>
                     </td>
                 </tr>

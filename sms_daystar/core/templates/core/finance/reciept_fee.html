@@ -26,8 +26,9 @@
                     <div class="">
                         <strong style="color: #120F75;">BILL TO</strong>
                         <p>
-                            {{ payreciept.sold_to.b_name }} <br> 
-                            {{ payreciept.sold_to.b_location }} <br>
+                            
+                            <span><strong>{{ payreciept}}</strong> </span>  <br> 
+                            <span><strong>{{ payreciept.f_baby.b_location}}</strong> </span>  <br> 
                             kamapala,Ug
 
                         </p>
@@ -44,7 +45,7 @@
                         <div class="d-flex justify-content-between">
                             <strong style="color: #120F75;">RECIEPT DATE</strong>
                             <div class="d-flex justify-content-start " style="width: 80px;">
-                                <span class="">{{ payreciept.sale_date }}</span>
+                                <span class="">{{ payreciept.payment_date }}</span>
                             </div>
                         </div>
                         
@@ -57,7 +58,7 @@
                     <hr style="color: #120F75; height: 5px;">
                     <div class="p-1 d-flex justify-content-between">
                         <strong text-primary style="color: #120F75;">TOTAL</strong>
-                        <span text-primary style="color: #120F75;">Ugx {{ payreciept.total_price }}</span>
+                        <span text-primary style="color: #120F75;">Ugx {{ payreciept.amount }}</span>
                     </div>
                     <hr style="color: #120F75;height: 5px;">
                     <div class="divider"></div>

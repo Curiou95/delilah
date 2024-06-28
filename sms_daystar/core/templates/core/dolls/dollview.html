@@ -22,11 +22,11 @@
 
 {% block buttons %}
 
-    <a href=" {% url 'sold_dolls' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <a style="background-color: #120F75;" href=" {% url 'sold_dolls' %}" class="btn d-inline-flex btn-sm btn-primary mx-1">
         <span class=" pe-2">
             <i class="bi bi-plus"></i>
         </span>
-        <span>view sold dolls</span>
+        <span >view sold dolls</span>
     </a>
 
     
@@ -42,10 +42,10 @@
                         <div class="card">
                             
                             <div class="card-body">
-                                <h5 class="card-title"> <strong>{{ item.name }}</strong> </h5>
+                                <h5 class="card-title" style="color: #FED402;"> <strong>{{ item.name }}</strong> </h5>
                                 <p class="card-text">{{ item.category.description }}</p>
                                 <p class="card-text">Unit Cost: shs.{{ item.unit_cost }}</p>
-                                <a href="{% url 'saledoll' item.pk %}" class="btn btn-primary">Sale</a>
+                                <a href="{% url 'saledoll' item.pk %}" class="btn btn-primary" style="background-color: #120F75;">Sale</a>
                             </div>
                         </div>
                     </div>
