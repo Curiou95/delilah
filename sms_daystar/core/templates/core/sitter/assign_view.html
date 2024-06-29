@@ -1,21 +1,27 @@
 {% extends "core/base.html" %}
 
 {% block page-title %}
-    <div class=" d-flex align-items-center">
-        <i class="bi bi-people text-primary" style="font-size: 80px;"></i>
-        <h1>   
-            ASSIGN SITTER
-        </h1>
-    </div>
+<h1 style="color:#120F75;">
+    <i>
+        <i class="bi bi-tencent-qq" style="font-size: 80px; color: #FED402;"></i>
+    </i>
+    <strong>
+        ASSIGN SITTER
+    </strong>
     
+</h1>
 
 {% endblock page-title %}
 
 
-
-{% block addlink %} {% url 'addsitter' %} {% endblock addlink %}
-
-
+{% block buttons %}
+<a href=" {% url 'viewsitter' %}" style="background-color: #120F75;font-size: 15px; " class="btn d-inline-flex btn-sm btn-primary mx-1">
+    <span class=" pe-2">
+        <i class="bi bi-tencent-qq"></i>
+    </span>
+    <span >Sitters</span>
+</a>
+{% endblock %}
 
 {% block title %}
     DayStar | AssignSitterPage
@@ -23,17 +29,15 @@
 
 {% block content %}
 
-<div class="">
+<div class="mt-3">
     <table class="table table-striped-columns">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">SITTER</th>
-                <th scope="col">STATUS</th>
-                <th scope="col">BABIES</th>
-                <th scope="col">DATE</th>
-                <th scope="col">PAY OUT</th>
-                <th scope="col">Actions</th>
+                <th scope="col"><h4><strong>#</strong></h4></th>
+                <th scope="col"><h4><strong>SITTER</strong></h4></th>
+                <th scope="col"><h4><strong>BABIES</strong></h4></th>
+                <th scope="col"><h4><strong>DATE</strong></h4></th>
+                <th scope="col"><h4><strong>PAY OUT</strong></h4></th>
             </tr>
         </thead>
         <tbody>
@@ -41,16 +45,15 @@
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{attendance.a_sitter.s_name}}</td>
-                    <td>{{attendance.status}}</td>
                     <td>
                         {% for baby in attendance.a_baby.all %}
                             <li>{{ baby.b_name }}</li>
                             {% with counter=forloop.counter %}{% endwith %}
                         {% endfor %}
                     </td>
-                    <td>{{ attendance.a_payment_date }}</td>
+                    <td>{{ attendance.a_payment_date|date:"Y-m-d" }}</td>
                     {% comment %} <td>{{ attendance.a_baby.all|length }}</td> {% endcomment %}
-                    <td>{{ attendance.total_payment }}</td>
+                    <td>shs.{{ attendance.total_payment }}</td>
                 </tr>
             {% endfor %}
         </tbody>
